@@ -1,0 +1,28 @@
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #011f29;
+}
+
+.dropdown-menu {
+    width: 600px;
+}
+.dropdown-item {
+    max-width: 250px;
+    overflow-wrap: break-word;
+}
+.categories-dropdown-item:not(:nth-child(1)):not(:nth-child(3n+4)) > a{
+    border-left: 2px solid aqua;
+}
+.content {
+    margin-top: 20px;
+    min-height: 800px;
+}
+.card {
+    width: 100%;
+    min-width: 300px;
+    border: none;
+}
