@@ -26,3 +26,6 @@ body {
     min-width: 300px;
     border: none;
 }
+.quest-desc {
+    padding: 10px 0 10px 0;
+}
