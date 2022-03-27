@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
     <title>QuestLovers</title>
 </head>
@@ -114,7 +114,7 @@
                     </div>
                     <div class="col">
                         <div class="card text-white bg-dark mb-3">
-                            <a href="#">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#quest-full-info">
                                 <img src="img/quests/kadroom_illuziya_obmana_photo1.jpg" class="card-img-top" alt="...">
                             </a>
                             <div class="card-body">
@@ -128,7 +128,7 @@
                     </div>
                     <div class="col">
                         <div class="card text-white bg-dark mb-3">
-                            <a href="#">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#quest-full-info">
                                 <img src="img/quests/puzzle_tainaya_lichnost_photo1.jpg" class="card-img-top" alt="...">
                             </a>
                             <div class="card-body">
@@ -142,7 +142,7 @@
                     </div>
                     <div class="col">
                         <div class="card text-white bg-dark mb-3">
-                            <a href="#">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#quest-full-info">
                                 <img src="img/quests/quest_land_lara_croft_hram_nadpisei_photo1.jpg"
                                     class="card-img-top" alt="...">
                             </a>
@@ -157,7 +157,7 @@
                     </div>
                     <div class="col">
                         <div class="card text-white bg-dark mb-3">
-                            <a href="#">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#quest-full-info">
                                 <img src="img/quests/zamok_drakona_zamok_drakona_photo1.jpg" class="card-img-top"
                                     alt="...">
                             </a>
@@ -179,7 +179,7 @@
                 <div class="modal-content text-white bg-dark mb-3">
                     <div class="container-fluid">
                         <div class="modal-header">
-                            <h5 class="modal-title">Quest title</h5>
+                            <h4 class="modal-title">Quest title</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -210,8 +210,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-outline-danger">Бронювати</button>
                     </div>
                 </div>
             </div>
@@ -221,13 +220,82 @@
 
     <footer class="footer mt-auto py-3 bg-dark">
         <div class="container">
-            <h1 style="color: aqua;">
-                Some footerdddddddddddddd.
-            </h1>
+            <!--<div class="row align-items-start">
+                <div class="col">
+                    
+                </div>
+                <div class="col">
+                   
+                </div>
+                <div class="col">
+                    
+                </div>
+            </div>-->
+            <div class="row footer__inner">
+				<div class="col-md footer__info-block footer__payment">
+					<h1 class="footer__info-title">
+						оплата
+					</h1>
+					<div class="footer__info-text">
+						<p class="payment__desc">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ullamcorper justo, nec, pellentesque.
+						</p>
+						<a href="#" class="paiment__link">
+							<img src="/img/visa-ico.jpg" alt="visa">
+						</a>
+						<a href="#" class="paiment__link">
+							<img src="/img/mastercard-ico.jpg" alt="mastercard">
+						</a>
+					</div>
+				</div>
+				<div class="col-md footer__info-block footer__contacts">
+					<h1 class="footer__info-title">
+						контакты
+					</h1>
+					<ul class="footer__info-text contacts__list">
+						<li class="contacts__item">
+							<a href="tel: +8 (812) 234-56-55" class="contacts__link contacts__tel">8 (812) 234-56-55</a>
+						</li>
+						<li class="contacts__item">
+							<a href="tel: +8 (812) 234-56-55" class="contacts__link contacts__tel">8 (812) 234-56-55</a>
+						</li>
+						<li class="contacts__item">
+							<a href="mailto: ojjo@ojjo.ru" class="contacts__link contacts__email">ojjo@ojjo.ru</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md footer__info-block footer__social-network">
+					<h1 class="footer__info-title">
+						социальные сети
+					</h1>
+					<div class="footer__info-text">
+						<p class="social-network__desc">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ullamcorper justo, nec, pellentesque.
+						</p>
+						<div class="social-network__links">
+							<a href="#" class="social-network__link">
+								<img src="/img/svg/youtube-ico.svg" alt="youtube">
+							</a>
+							<a href="#" class="social-network__link">
+								<img src="/img/svg/vk-ico.svg" alt="vk">
+							</a>
+							<a href="#" class="social-network__link">
+								<img src="/img/svg/facebook-ico.svg" alt="facebook" style="color: aliceblue;">
+							</a>
+							<a href="#" class="social-network__link">
+								<img src="/img/svg/telegram-ico.svg" alt="telegram">
+							</a>
+							<a href="#" class="social-network__link">
+								<img src="/img/svg/etsy-ico.svg" alt="e">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
         </div>
     </footer>
 
-    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-3.6.0.min.js"></script>
 </body>
 
