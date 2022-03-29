@@ -9,7 +9,7 @@ body {
 }
 
 h1 {
-    color: rgb(180, 180, 180)
+    color: aqua
 }
 
 .block-title {
@@ -63,9 +63,9 @@ h1 {
     margin-bottom: 20px;
     font-size: 14px;
     line-height: 150%;
-    color: rgb(180, 180, 180);
+    color: aqua;
 
-    border-bottom: 1px solid rgb(180, 180, 180);
+    border-bottom: 1px solid aqua;
 }
 
 .footer__info-block {
@@ -81,17 +81,17 @@ h1 {
     line-height: 140%;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgb(180, 180, 180);
+    color: aqua;
     margin-bottom: 30px;
     padding-bottom: 10px;
-    border-bottom: 1px solid rgb(180, 180, 180);
+    border-bottom: 1px solid aqua;
 }
 
 .info__item {
     margin-bottom: 15px;
 }
 
-.info__link {
+.info__link .contacts__link {
     text-decoration: none;
     color: rgb(180, 180, 180);
     
