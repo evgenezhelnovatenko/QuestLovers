@@ -9,6 +9,8 @@
 //     print("Соединение установлено успешно");
 // }
 
+
+
 $path=explode("/", $_SERVER["REQUEST_URI"]);
 
 switch ($path[1]) {
@@ -70,17 +72,22 @@ function content() {
     $block = "";
     if(count($data)!=0) {
         foreach($data as $d) {
+            $type_of_game = bd("SELECT name FROM type_of_game WHERE id=:type_of_game_id", array("type_of_game_id"=>$d["type_of_game_id"]));
+
             $block .= '<div class="col">
-            <div class="card text-white bg-dark mb-3">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#quest-full-info">
+            <div id="'.$d["id"].'" class="quest__card card text-white bg-dark mb-3">
+                <a role="button" class="quest-link">
                     <img src="{{domain}}'.$d["path_to_images"].'" class="card-img-top" alt="...">
+                    <div class="card-img-overlay">
+                        <p class="card-text">'.$d["annotation"].'</p>
+                    </div>
                 </a>
                 <div class="card-body">
                     <h5 class="card-title">'
                         .$d["title"].'
                     </h5>
                     <p class="card-text">'
-                        .$d["full_desc"].'
+                        .$type_of_game[0]["name"].'
                     </p>
                     <a href="#" class="btn btn-outline-danger">Бронювати</a>
                 </div>
@@ -97,6 +104,22 @@ function content() {
 
     echo $view;
 }
+
+// function modal($quest_id) {
+//     $viewModal=file_get_contents("view/content.html");
+
+//     $data = bd("SELECT * FROM quest WHERE id=:quest_id", array("quest_id"=>$quest_id));
+
+//     echo 'dfsdlkfjklsfklsdhflkshfklshfkl';
+
+//     $viewModal=str_replace("{{quest_title}}",$data[0]["title"],$viewModal);
+//     //$viewModal=str_replace("{{path_to_img}}",$data["path_to_img"],$viewModal);
+//     //$viewModal=str_replace("{{full_quest_desc}}",$data["full_desc"],$viewModal);
+
+//     // $viewContent = file_get_contents("view/content.html");
+//     // $viewContent=str_replace("{{modal_window}}",$viewModal,$viewContent);
+ 
+// }
 
 function main() {
     slider();
@@ -115,7 +138,7 @@ function bd($sql, $prm){
     $host = 'localhost';
     $db   = 'quest_lovers';
     $user = 'root';
-    $pass = '';
+    $pass = 'dinamo03';
     $charset = 'utf8';
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
     $opt = [

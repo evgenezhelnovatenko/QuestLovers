@@ -45,10 +45,35 @@ h1 {
     margin-top: 20px;
     min-height: 800px;
 }
-.card {
+.quest__card {
     width: 100%;
     min-width: 300px;
     border: none;
+}
+.quest-link {
+    position: relative;
+}
+.card-img-overlay {
+    display: flex;
+    justify-content: center; /*Центрирование по горизонтали*/
+    align-items: center; 
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    
+    background-color: black;
+    color: white;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0s linear 0.3s;
+}
+
+.quest-link:hover > .card-img-overlay{
+    opacity: 0.6;
+    visibility: visible;
+    transition-delay: 0s;
 }
 .quest-desc {
     padding: 10px 0 10px 0;

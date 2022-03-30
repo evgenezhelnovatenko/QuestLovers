@@ -10,3 +10,38 @@ insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, m
             0,
             '/img/quests/kadroom_illuziya_obmana_photo1.jpg',
             1);
+            
+insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, shedule, number_of_review, path_to_images, number_of_images)
+	values ('Экстремальное шоу', 1, 2, 6, 16, null, 3, 1, 0.0, 60, 
+			'м. Площади Независимости, ул. Крещатик, д. 15', 
+			'443347801', 
+            null, 
+            'Считаете себя бесстрашным? Пришло время это проверить!', 
+            'Вы компания друзей, которые решили отправиться на экскурсию в горы и по чистой случайности заблудились, оказавшись в пещере каннибалов. Эти твари безумно любят запугивать своих жертв, ведь по старой легенде, которая обитает в этих стенах, человеческое мясо с адреналином вкуснее и сочнее. В этом месте собраны все человеческие страхи, но у вас все же есть шанс спастись, ведь у одного из вас в кармане остался фонарик.',
+            'Ранее квест назывался «Игра на выживание».<br>Доступны также режимы:<br><ul><li>игра на выживание, 14+ (15-20 мин.);</li><li>эксклюзивное шоу, 18+ (15-40 мин.).</li></ul>Скидка в день рождения: в команде более четырех игроков один участник проходит бесплатно.',
+            '{}',
+            0,
+            '/img/quests/insomnia_ekstremalnoe_shou_photo1.jpg',
+            1);
+            
+insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, shedule, number_of_review, path_to_images, number_of_images)
+	values ('Тайная личность', 1, 2, 5, 14, null, 3, 1, 0.0, 60, 
+			'м. Позняки, ул. Срибнокольская, д. 1 А', 
+			'443347801', 
+            null, 
+            'Вы заключенные приговоренные к смертной казни...', 
+            'Противоположные личности в криминальном мире, которые объединяются воедино. Только объединившись в одно целое, вы сможете выбраться!
+			Игра начинается с того, что каждый участник прикован наручниками с мешком на голове. На все про все у вас есть 60 минут. Но не все так легко, как кажется, на пути вам придется столкнуться со множеством задач и препятствий.',
+            'Меры предосторожности:<br>
+			<ul>
+			<li>установлены дезинфекторы для рук;</li>
+			<li>дезинфекция игровых предметов;</li>
+			<li>проведение дезинфицирующих действий в перерывах;</li>
+			<li>термометрия сотрудников.</li>
+			</ul><br>
+			Фотографии игроков: услуга не предоставляется.<br>
+			Видео прохождения квеста: услуга не предоставляется.',
+            '{}',
+            0,
+            '/img/quests/puzzle_tainaya_lichnost_photo1.jpg',
+            1);
