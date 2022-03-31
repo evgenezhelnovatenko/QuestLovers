@@ -87,10 +87,10 @@ h1 {
 .quest_specifics {
     border: 2px white solid;
 }
-.shedule_for_the_day {
+.schedule_for_the_day {
     
 }
-.shedule_item {
+.schedule_item {
     display: flex;
     justify-content: center;
     width: 125px;
@@ -102,19 +102,19 @@ h1 {
     margin-right: auto;
     font-weight: bold;
 }
-.shedule_item-sm_price {
+.schedule_item-sm_price {
     border-color: rgb(255, 255, 121);
     color: rgb(255, 255, 121);
 }
-.shedule_item-md_price {
+.schedule_item-md_price {
     border-color: rgb(142, 255, 142);
     color: lightgreen;
 }
-.shedule_item-lg_price {
+.schedule_item-lg_price {
     border-color: lightblue;
     color: lightblue;
 }
-.shedule_item-xl_price {
+.schedule_item-xl_price {
     border-color: red;
     color: red;
 }

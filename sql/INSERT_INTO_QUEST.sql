@@ -1,4 +1,4 @@
-insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, shedule, number_of_review, path_to_images, number_of_images)
+insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, schedule, number_of_review, path_to_images, number_of_images)
 	values ('Иллюзия обмана', 1, 2, 6, 16, null, 3, 1, 0.0, 60, 
 			'м. Печерская, б-р Леси Украинки, д. 24', 
 			'(44)334-78-01', 
@@ -11,7 +11,7 @@ insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, m
             '/img/quests/kadroom_illuziya_obmana_photo1.jpg',
             1);
             
-insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, shedule, number_of_review, path_to_images, number_of_images)
+insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, schedule, number_of_review, path_to_images, number_of_images)
 	values ('Экстремальное шоу', 1, 2, 6, 16, null, 3, 1, 0.0, 60, 
 			'м. Площади Независимости, ул. Крещатик, д. 15', 
 			'(44)334-78-01', 
@@ -24,7 +24,7 @@ insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, m
             '/img/quests/insomnia_ekstremalnoe_shou_photo1.jpg',
             1);
             
-insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, shedule, number_of_review, path_to_images, number_of_images)
+insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, schedule, number_of_review, path_to_images, number_of_images)
 	values ('Тайная личность', 1, 2, 5, 14, null, 3, 1, 0.0, 60, 
 			'м. Позняки, ул. Срибнокольская, д. 1 А', 
 			'(44)334-78-01', 
@@ -46,7 +46,7 @@ insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, m
             '/img/quests/puzzle_tainaya_lichnost_photo1.jpg',
             1);
             
-insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, shedule, number_of_review, path_to_images, number_of_images)
+insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, schedule, number_of_review, path_to_images, number_of_images)
 	values ('Lara Croft. Храм надписей', 1, 2, 5, 14, 10, 2, 1, 0.0, 60, 
 			'м. Контрактовая площадь, ул. Притисско-Никольская, д. 2', 
 			'(44)334-78-01', 

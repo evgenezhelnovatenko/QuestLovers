@@ -33,7 +33,7 @@ $result = array(
     'full_desc' => $quest[0]["full_desc"],
     'specifics' => $quest[0]["specifics"],
     'genres' => $genres,
-    'shedule' => $quest[0]["shedule"]
+    'schedule' => $quest[0]["schedule"]
 );
 
 echo json_encode($result);

@@ -27,29 +27,52 @@ $(".quest-link").click(function(){
             
         });
 
-        var sheduleJson = JSON.parse(data.shedule);
-        var weekdaysArray = sheduleJson["weekdays"];
-        var weekendArray = sheduleJson["weekend"];
+        var scheduleJson = JSON.parse(data.schedule);
+        var weekdaysArray = scheduleJson["weekdays"];
+        var weekendArray = scheduleJson["weekend"];
 
-        $("#quest_shedule > .row").empty();
+        $("#quest_schedule > .row").empty();
         var block = '';
         var i = 0;
-        for (; i < 5; i++) {
-            $("#quest_shedule > .row").append('<div class="col"><div class="shedule_for_the_day"></div></div>');
-            
-            weekdaysArray.forEach(element => {
-                block = getSheduleString(element);
-                $("#quest_shedule > .row > .col").eq(i).find(".shedule_for_the_day").append(block);
-            });
-
-        }
-
         for (; i < 7; i++) {
-            $("#quest_shedule > .row").append('<div class="col"><div class="shedule_for_the_day "></div></div>');
-            weekendArray.forEach(element => {
-                block = getSheduleString(element);
-                $("#quest_shedule > .row > .col").eq(i).find(".shedule_for_the_day").append(block);
-            });
+            $("#quest_schedule > .row").append('<div class="col"><div class="schedule_for_the_day"></div></div>');
+            
+            switch (i) {
+                case 0:
+                    $("#quest_schedule > .row > .col").eq(i).prepend('<h5>Понедельник</h5>');
+                    break;
+                case 1:
+                    $("#quest_schedule > .row > .col").eq(i).prepend('<h5>Вторник</h5>');
+                    break;
+                case 2:
+                    $("#quest_schedule > .row > .col").eq(i).prepend('<h5>Среда</h5>');
+                    break;
+                case 3:
+                    $("#quest_schedule > .row > .col").eq(i).prepend('<h5>Четверг</h5>');
+                    break;
+                case 4:
+                    $("#quest_schedule > .row > .col").eq(i).prepend('<h5>Пятница</h5>');
+                    break;
+                case 5:
+                    $("#quest_schedule > .row > .col").eq(i).prepend('<h5>Суббота</h5>');
+                    break;
+                case 6:
+                    $("#quest_schedule > .row > .col").eq(i).prepend('<h5>Воскресенье</h5>');
+                    break;
+            }
+
+            if (i < 5) {
+                weekdaysArray.forEach(element => {
+                    block = getscheduleString(element);
+                    $("#quest_schedule > .row > .col").eq(i).find(".schedule_for_the_day").append(block);
+                });
+            } else {
+                $("#quest_schedule > .row").append('<div class="col"><div class="schedule_for_the_day "></div></div>');
+                weekendArray.forEach(element => {
+                    block = getscheduleString(element);
+                    $("#quest_schedule > .row > .col").eq(i).find(".schedule_for_the_day").append(block);
+                });
+            }
 
         }
 
@@ -62,19 +85,19 @@ $(".quest-link").click(function(){
 
 })
 
-function getSheduleString(element) {
-    var sheduleStr = '';
+function getscheduleString(element) {
+    var scheduleStr = '';
 
     if(element.price <= 750)
-        sheduleStr = '<div class="shedule_item shedule_item-sm_price">'+element.time+' '+element.price+'грн.</div>';
+        scheduleStr = '<div class="schedule_item schedule_item-sm_price">'+element.time+' '+element.price+'грн.</div>';
     else if (element.price <= 850)
-        sheduleStr = '<div class="shedule_item shedule_item-md_price">'+element.time+' '+element.price+'грн.</div>';
+        scheduleStr = '<div class="schedule_item schedule_item-md_price">'+element.time+' '+element.price+'грн.</div>';
     else if (element.price <= 900)
-        sheduleStr = '<div class="shedule_item shedule_item-lg_price">'+element.time+' '+element.price+'грн.</div>';
+        scheduleStr = '<div class="schedule_item schedule_item-lg_price">'+element.time+' '+element.price+'грн.</div>';
     else 
-        sheduleStr = '<div class="shedule_item shedule_item-xl_price">'+element.time+' '+element.price+'грн.</div>';
+        scheduleStr = '<div class="schedule_item schedule_item-xl_price">'+element.time+' '+element.price+'грн.</div>';
 
-    return sheduleStr;
+    return scheduleStr;
 }
 
 function showModal(element) {
