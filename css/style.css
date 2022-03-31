@@ -5,7 +5,7 @@
 
 body {
     min-height: 100vh;
-    background-color: #011f29;
+    background-color: rgb(31, 32, 43);
 }
 
 h1 {
@@ -69,7 +69,6 @@ h1 {
     visibility: hidden;
     transition: opacity 0.3s, visibility 0s linear 0.3s;
 }
-
 .quest-link:hover > .card-img-overlay{
     opacity: 0.6;
     visibility: visible;
@@ -78,6 +77,48 @@ h1 {
 .quest-desc {
     padding: 10px 0 10px 0;
 }
+
+/*Modal window*/
+.quest_genre {
+    border: 1px aqua solid;
+    border-radius: 2px;
+    padding: 0px 5px;
+}
+.quest_specifics {
+    border: 2px white solid;
+}
+.shedule_for_the_day {
+    
+}
+.shedule_item {
+    display: flex;
+    justify-content: center;
+    width: 125px;
+    border: 1px solid;
+    border-radius: 2px;
+    padding: 0px 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+}
+.shedule_item-sm_price {
+    border-color: rgb(255, 255, 121);
+    color: rgb(255, 255, 121);
+}
+.shedule_item-md_price {
+    border-color: rgb(142, 255, 142);
+    color: lightgreen;
+}
+.shedule_item-lg_price {
+    border-color: lightblue;
+    color: lightblue;
+}
+.shedule_item-xl_price {
+    border-color: red;
+    color: red;
+}
+
 .modal-footer {
     justify-content: flex-start;
 }

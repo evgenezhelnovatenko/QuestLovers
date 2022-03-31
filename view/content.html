@@ -3,88 +3,11 @@
         <h1 class="block-title">Квести</h2>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 justify-content-start">
             {{quest_cards}}
-           <!-- <div class="col">
-                <div class="card text-white bg-dark mb-3">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#quest-full-info" class="quest-link">
-                        <img src="{{domain}}/img/quests/insomnia_ekstremalnoe_shou_photo1.jpg" class="card-img-top"
-                            alt="...">
-                        <div class="card-img-overlay">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-                    </a>
-                    
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up
-                            the bulk of the card's content.
-                        </p>
-                        <a href="#" class="btn btn-outline-danger">Бронювати</a>
-                    </div>
-                </div>
-            </div>
-             <div class="col">
-                <div class="card text-white bg-dark mb-3">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#quest-full-info">
-                        <img src="{{domain}}/img/quests/kadroom_illuziya_obmana_photo1.jpg" class="card-img-top" alt="...">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up
-                            the bulk of the card's content.
-                        </p>
-                        <a href="#" class="btn btn-outline-danger">Бронювати</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card text-white bg-dark mb-3">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#quest-full-info">
-                        <img src="{{domain}}/img/quests/puzzle_tainaya_lichnost_photo1.jpg" class="card-img-top" alt="...">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up
-                            the bulk of the card's content.
-                        </p>
-                        <a href="#" class="btn btn-outline-danger">Бронювати</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card text-white bg-dark mb-3">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#quest-full-info">
-                        <img src="{{domain}}/img/quests/quest_land_lara_croft_hram_nadpisei_photo1.jpg"
-                            class="card-img-top" alt="...">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up
-                            the bulk of the card's content.
-                        </p>
-                        <a href="#" class="btn btn-outline-danger">Бронювати</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card text-white bg-dark mb-3">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#quest-full-info">
-                        <img src="{{domain}}/img/quests/zamok_drakona_zamok_drakona_photo1.jpg" class="card-img-top"
-                            alt="...">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up
-                            the bulk of the card's content.
-                        </p>
-                        <a href="#" class="btn btn-outline-danger">Бронювати</a>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 </section>
 <div id="quest-full-info-modal" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-fullscreen-md-down modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-fullscreen-lg-down modal-dialog-centered">
         <div class="modal-content text-white bg-dark mb-3">
             
             <div class="modal-header">
@@ -92,34 +15,44 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row row-cols-1 row-cols-lg-2">
+                        <div class="col mb-2 mb-xl-0">
+                            <img id="quest_modal-img" src="{{domain}}" class="card-img-top"
+                                alt="...">
+                        </div>
+                        <div class="col">
+                            <div id="quest_genres_list" class="row row-cols-auto ms-0">
+                                <!-- genres from DB -->
+                            </div>
+                            <h4>Количество игроков:</h4>
+                            <p id="quest_number_of_players"></p>
+                            <h4>Возраст:</h4>
+                            <p id="quest_age_limit"></p>
+                            <h4>Время:</h4>
+                            <p id="quest_duration"></p>
+                            <h4>Адресс:</h4>
+                            <p id="quest_address"></p>
+                        </div>
+                    </div>
+                    <div id="quest_desc" class="quest-desc">
+                        <h3>Описание</h3>
+                        <p>
+                            <!-- description from DB -->
+                        </p>
+                    </div>
+                    <div id="quest_specifics">
+                        <h3>Особенности</h3>
+                        <p>
+                            <!-- spesifics from DB -->
+                        </p>
+                    </div>
+                    <div id="quest_shedule">
+                        <h3>Расписание</h3>
+                        <div class="row justify-content-end mb-4">
 
-                <div class="row">
-                    <div class="col">
-                        <img id="quest_modal-img" src="{{domain}}" class="card-img-top"
-                            alt="...">
+                        </div>
                     </div>
-                    <div class="col">
-                        <h4>Количество игроков:</h4>
-                        <p id="quest_number_of_players"></p>
-                        <h4>Возраст:</h4>
-                        <p id="quest_age_limit"></p>
-                        <h4>Время:</h4>
-                        <p id="quest_duration"></p>
-                        <h4>Адресс:</h4>
-                        <p id="quest_address"></p>
-                    </div>
-                </div>
-                <div id="quest_desc" class="quest-desc">
-                    <h3>Описание</h3>
-                    <p>
-                        
-                    </p>
-                </div>
-                <div id="quest_specifics">
-                    <h3>Особенности</h3>
-                    <p>
-                        
-                    </p>
                 </div>
             </div>
             

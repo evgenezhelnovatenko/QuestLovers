@@ -15,18 +15,25 @@ file_put_contents('logs.txt', $logs. "\r\n", FILE_APPEND);
 $quest_id = $_REQUEST["quest_id"];
 $domain=$_SERVER["REQUEST_SCHEME"]."://".$_SERVER["SERVER_NAME"];
 
-$data = bd("SELECT * FROM quest WHERE id=:quest_id", array("quest_id"=>$quest_id));
-$path_to_img = $domain.$data[0]["path_to_images"];
+$quest = bd("SELECT * FROM quest WHERE id=:quest_id", array("quest_id"=>$quest_id));
+$genres_id = bd("SELECT genre_id FROM quest_has_genre WHERE quest_id=:id", array("id"=>$quest_id));
+$genres = array();
+foreach ($genres_id as $genre_id) {
+    $genre = bd("SELECT name FROM genre WHERE id=:genre_id", array("genre_id"=>$genre_id["genre_id"]));
+    array_push($genres, $genre[0]["name"]);
+}
+$path_to_img = $domain.$quest[0]["path_to_images"];
 $result = array(
-    'quest_title' => $data[0]["title"],
+    'quest_title' => $quest[0]["title"],
     'path_to_img' => $path_to_img,
-    'number_of_players' => $data[0]["min_number_of_players"].' - '.$data[0]["max_number_of_players"],
-    'age_limit' => $data[0]["age_limit"].'+',
-    'duration' => $data[0]["duration"],
-    'address' => $data[0]["address"],
-    'full_desc' => $data[0]["full_desc"],
-    'specifics' => $data[0]["specifics"]
-    
+    'number_of_players' => $quest[0]["min_number_of_players"].' - '.$quest[0]["max_number_of_players"],
+    'age_limit' => $quest[0]["age_limit"].'+',
+    'duration' => $quest[0]["duration"],
+    'address' => $quest[0]["address"],
+    'full_desc' => $quest[0]["full_desc"],
+    'specifics' => $quest[0]["specifics"],
+    'genres' => $genres,
+    'shedule' => $quest[0]["shedule"]
 );
 
 echo json_encode($result);
