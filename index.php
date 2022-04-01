@@ -1,16 +1,5 @@
 <?php
 
-// $link = mysqli_connect("localhost", "root", "dinamo03");
-
-// if ($link == false){
-//     print("Ошибка: Невозможно подключиться к MySQL " . mysqli_connect_error());
-// }
-// else {
-//     print("Соединение установлено успешно");
-// }
-
-
-
 $path=explode("/", $_SERVER["REQUEST_URI"]);
 
 switch ($path[1]) {
@@ -105,22 +94,6 @@ function content() {
     echo $view;
 }
 
-// function modal($quest_id) {
-//     $viewModal=file_get_contents("view/content.html");
-
-//     $data = bd("SELECT * FROM quest WHERE id=:quest_id", array("quest_id"=>$quest_id));
-
-//     echo 'dfsdlkfjklsfklsdhflkshfklshfkl';
-
-//     $viewModal=str_replace("{{quest_title}}",$data[0]["title"],$viewModal);
-//     //$viewModal=str_replace("{{path_to_img}}",$data["path_to_img"],$viewModal);
-//     //$viewModal=str_replace("{{full_quest_desc}}",$data["full_desc"],$viewModal);
-
-//     // $viewContent = file_get_contents("view/content.html");
-//     // $viewContent=str_replace("{{modal_window}}",$viewModal,$viewContent);
- 
-// }
-
 function main() {
     slider();
     content();
@@ -155,12 +128,6 @@ function bd($sql, $prm){
 }
 
 function error() {
-    // $view=file_get_contents("view/head.html");
-    // $domain=$_SERVER["REQUEST_SCHEME"]."://".$_SERVER["SERVER_NAME"];
-    // $view=str_replace("{{domain}}",$domain,$view);
-    // $view=str_replace("{{title}}",$title,$view);
-    // echo $view;
-    // echo '<div class="container"><h1>#404</h1><h5>Сторінка відсутня</h5></div>';
 
 }
 

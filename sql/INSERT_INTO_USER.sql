@@ -1,0 +1,2 @@
+insert into quest_lovers.user (email, password, first_name, last_name, phone_number, date_of_birth)
+values ('qwerty228@gmail.com', 'palina337', 'Евгений', 'Желноватенко', '(68)475-63-87', STR_TO_DATE('03-03-2002', '%d-%m-%Y'));

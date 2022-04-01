@@ -1,3 +1,5 @@
+@import "bootstrap/variables";
+
 *, ::after, ::before {
     box-sizing: border-box;
     font-family: 'Constantia Bold Italic';
@@ -10,6 +12,16 @@ body {
 
 h1 {
     color: aqua
+}
+
+.unselectable {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                    not supported by any browser */
 }
 
 .block-title {
@@ -87,38 +99,98 @@ h1 {
 .quest_specifics {
     border: 2px white solid;
 }
-.schedule_for_the_day {
-    
+#contentContainer {
+    display: flex;
+    align-items: center;
+}
+#schedule_carusel-inner {
+    padding: 0 10px;
+}
+/* .schedule_carusel-item {
+    float: left;
+    height: 100%;
+    white-space: normal;
+    background-repeat: no-repeat;
+} */
+/* .day {
+    float: left;
+    width: calc(100% / 7);
+    height: 100%;
+    border: 1px black solid;
+    white-space: normal;
+    text-align: center;
+} */
+.schedule_carusel-month {
+    text-align: center;
+}
+.day {
+    text-align: center;
+}
+.carousel-control-next,
+.carousel-control-prev {
+    width: 5%;
+    height: 100px;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.137);
 }
 .schedule_item {
-    display: flex;
-    justify-content: center;
     width: 125px;
-    border: 1px solid;
+    border: 2px solid;
     border-radius: 2px;
-    padding: 0px 5px;
-    margin-bottom: 5px;
+    padding: 5px 0px;
+    margin-bottom: 10px;
     margin-left: auto;
     margin-right: auto;
     font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+}
+.schedule_item:hover {
+    cursor: pointer;
 }
 .schedule_item-sm_price {
     border-color: rgb(255, 255, 121);
     color: rgb(255, 255, 121);
 }
+.schedule_item-sm_price:not(.booked):hover {
+    background-color: rgb(255, 255, 121);
+    color: black;
+    transition: background-color 0.2s, color 0.2s;
+}
 .schedule_item-md_price {
     border-color: rgb(142, 255, 142);
     color: lightgreen;
 }
+.schedule_item-md_price:not(.booked):hover {
+    background-color: rgb(142, 255, 142);
+    color: black;
+    transition: background-color 0.2s, color 0.2s;
+}
 .schedule_item-lg_price {
-    border-color: lightblue;
-    color: lightblue;
+    border-color: rgb(44, 202, 255);
+    color: rgb(44, 202, 255);
+}
+.schedule_item-lg_price:not(.booked):hover {
+    background-color: rgb(44, 202, 255);
+    color: black;
+    transition: background-color 0.2s, color 0.2s;
 }
 .schedule_item-xl_price {
-    border-color: red;
-    color: red;
+    border-color: rgb(255, 39, 39);
+    color: rgb(255, 39, 39);
 }
-
+.schedule_item-xl_price:not(.booked):hover {
+    background-color: rgb(255, 39, 39);
+    color: black;
+    transition: background-color 0.2s, color 0.2s;
+}
+.booked {
+    border-color: #fff;
+    background-color: grey;
+    color: #fff;
+}
+.booked:hover {
+    cursor: not-allowed;
+}
 .modal-footer {
     justify-content: flex-start;
 }

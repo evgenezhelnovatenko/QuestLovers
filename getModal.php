@@ -17,14 +17,19 @@ $domain=$_SERVER["REQUEST_SCHEME"]."://".$_SERVER["SERVER_NAME"];
 
 $quest = bd("SELECT * FROM quest WHERE id=:quest_id", array("quest_id"=>$quest_id));
 $genres_id = bd("SELECT genre_id FROM quest_has_genre WHERE quest_id=:id", array("id"=>$quest_id));
+$quest_bookings = bd("SELECT date_and_time, status FROM booking WHERE quest_id=:id", array("id"=>$quest_id));
 $genres = array();
+//$quest_booking_dateTime = array();
 foreach ($genres_id as $genre_id) {
     $genre = bd("SELECT name FROM genre WHERE id=:genre_id", array("genre_id"=>$genre_id["genre_id"]));
     array_push($genres, $genre[0]["name"]);
 }
+// foreach ($quest_bookings as $qb) {
+//     array_push($quest_booking, array('date_and_time' => $qb["date_and_time"], 'status' => $qb["status"]));
+// }
 $path_to_img = $domain.$quest[0]["path_to_images"];
 $result = array(
-    'quest_title' => $quest[0]["title"],
+    'title' => $quest[0]["title"],
     'path_to_img' => $path_to_img,
     'number_of_players' => $quest[0]["min_number_of_players"].' - '.$quest[0]["max_number_of_players"],
     'age_limit' => $quest[0]["age_limit"].'+',
@@ -33,7 +38,8 @@ $result = array(
     'full_desc' => $quest[0]["full_desc"],
     'specifics' => $quest[0]["specifics"],
     'genres' => $genres,
-    'schedule' => $quest[0]["schedule"]
+    'schedule' => $quest[0]["schedule"],
+    'bookings' => $quest_bookings
 );
 
 echo json_encode($result);
