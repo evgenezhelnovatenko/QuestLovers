@@ -53,16 +53,15 @@ $(".quest-link").click(function(){
             var page_number = 0;
             var days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
             var month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
-            var currentDate = new Date();
-
+            var date = new Date();
         
-            appendScheduleWeekItem(page_number, currentDate, days, month, scheduleJson, quest.bookings);
+            appendScheduleWeekItem(page_number, date, days, month, scheduleJson, quest.bookings);
             page_number++;
-            appendScheduleWeekItem(page_number, currentDate, days, month, scheduleJson, quest.bookings);
+            appendScheduleWeekItem(page_number, date, days, month, scheduleJson, quest.bookings);
             page_number++;
-            appendScheduleWeekItem(page_number, currentDate, days, month, scheduleJson, quest.bookings);
+            appendScheduleWeekItem(page_number, date, days, month, scheduleJson, quest.bookings);
             page_number++;
-            appendScheduleWeekItem(page_number, currentDate, days, month, scheduleJson, quest.bookings);
+            appendScheduleWeekItem(page_number, date, days, month, scheduleJson, quest.bookings);
 
         }
 
@@ -72,7 +71,7 @@ $(".quest-link").click(function(){
 
 })
 
-function appendScheduleWeekItem (page_number, currentDate, days, month, scheduleJson, bookings) {
+function appendScheduleWeekItem (page_number, date, days, month, scheduleJson, bookings) {
 
     var weekdaysArray = scheduleJson["weekdays"];
     var weekendArray = scheduleJson["weekend"];
@@ -97,13 +96,15 @@ function appendScheduleWeekItem (page_number, currentDate, days, month, schedule
     var dateStr = '';
     var pageBlock = $(".schedule_carusel-item").eq(page_number);
 
-    pageBlock.find(".schedule_carusel-month > h3").append(month[currentDate.getMonth()]);
+    pageBlock.find(".schedule_carusel-month > h3").append(month[date.getMonth()]);
+
+    var currentDate = new Date();
 
     for (var i = 0; i < 7; i++) {
         var dayBlock = pageBlock.find(".day").eq(i);
-        dayBlock.append('<div class="date"><h5>'+ currentDate.getDate() +'</h5><p>' + days[currentDate.getDay()] + '</p></div>');
-
-        switch (currentDate.getDay()) {
+        dayBlock.append('<div class="date"><h5>'+ date.getDate() +'</h5><p>' + days[date.getDay()] + '</p></div>');
+        //console.log(currentDate.getDate() + '>' + date.getDate());
+        switch (date.getDay()) {
             case 1:
             case 2:
             case 3:
@@ -111,32 +112,20 @@ function appendScheduleWeekItem (page_number, currentDate, days, month, schedule
             case 5:
                 weekdaysArray.forEach(element => {
                     dayBlock.append(getScheduleString(element));
-                    bookings.forEach(booking => {
-                        //console.log(booking["status"]);
-                        var booking_dateTime = new Date(booking["date_and_time"]);
-                        var schedule_dateTime = parseStringToHoursAndMinutes(element.time);
-
-                        //console.log(booking_dateTime.getHours() + ':' + booking_dateTime.getMinutes());
-                        if (booking["status"] &&
-                            booking_dateTime.getFullYear() == currentDate.getFullYear() &&
-                            booking_dateTime.getMonth() == currentDate.getMonth() &&
-                            booking_dateTime.getDate() == currentDate.getDate() &&
-                            booking_dateTime.getHours() === schedule_dateTime.getHours() &&
-                            booking_dateTime.getMinutes() === schedule_dateTime.getMinutes()) {
-
-                            dayBlock.find(".schedule_item").last().addClass('booked');
-                        }
-                    })
+                    
+                    makingTheQuestDateInactive(dayBlock, element, bookings, currentDate, date);
                 });
                 break;
             case 0:
             case 6:
                 weekendArray.forEach(element => {
                     dayBlock.append(getScheduleString(element));
+
+                    makingTheQuestDateInactive(dayBlock, element, bookings, currentDate, date);
                 });
                 break;
         }
-        currentDate.setDate(currentDate.getDate() + 1);
+        date.setDate(date.getDate() + 1);
     }
 }
 
@@ -163,3 +152,27 @@ function parseStringToHoursAndMinutes(str) {
 
     return hoursAndMinutesDate;
 }
+
+function makingTheQuestDateInactive (dayBlock, scheduleElement, bookings, currentDate, date) {
+    
+    bookings.forEach(booking => {
+
+        var booking_dateTime = new Date(booking["date_and_time"]);
+        var schedule_dateTime = parseStringToHoursAndMinutes(scheduleElement.time);
+        date.setHours(schedule_dateTime.getHours());
+        date.setMinutes(schedule_dateTime.getMinutes());
+
+        //console.log(currentDate.getHours() + '>' + date.getHours());
+        if ((booking["status"] &&
+                booking_dateTime.getFullYear() == date.getFullYear() &&
+                booking_dateTime.getMonth() == date.getMonth() &&
+                booking_dateTime.getDate() == date.getDate() &&
+                booking_dateTime.getHours() === date.getHours() &&
+                booking_dateTime.getMinutes() === date.getMinutes()) ||
+            (currentDate.getTime() > date.getTime())
+        ) {
+            //console.log(currentDate.getHours() + '>' + date.getHours());
+            dayBlock.find(".schedule_item").last().addClass('booked');
+        }
+    });
+} 
