@@ -41,7 +41,7 @@ insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, m
 			</ul><br>
 			Фотографии игроков: услуга не предоставляется.<br>
 			Видео прохождения квеста: услуга не предоставляется.',
-            '{}',
+            '{"weekdays":[{"time":"11:00","price":750},{"time":"12:30","price":750},{"time":"14:00","price":750},{"time":"15:00","price":750},{"time":"17:00","price":750},{"time":"19:00","price":850},{"time":"20:30","price":850},{"time":"22:00","price":1000}],"weekend":[{"time":"11:00","price":850},{"time":"12:30","price":850},{"time":"14:00","price":850},{"time":"15:00","price":850},{"time":"17:00","price":850},{"time":"19:00","price":900},{"time":"20:30","price":900},{"time":"22:00","price":1000}]}',
             0,
             '/img/quests/puzzle_tainaya_lichnost_photo1.jpg',
             1);

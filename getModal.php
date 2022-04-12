@@ -15,18 +15,16 @@ file_put_contents('logs.txt', $logs. "\r\n", FILE_APPEND);
 $quest_id = $_REQUEST["quest_id"];
 $domain=$_SERVER["REQUEST_SCHEME"]."://".$_SERVER["SERVER_NAME"];
 
-$quest = bd("SELECT * FROM quest WHERE id=:quest_id", array("quest_id"=>$quest_id));
-$genres_id = bd("SELECT genre_id FROM quest_has_genre WHERE quest_id=:id", array("id"=>$quest_id));
-$quest_bookings = bd("SELECT date_and_time, status FROM booking WHERE quest_id=:id", array("id"=>$quest_id));
+$quest = bd("SELECT", "SELECT * FROM quest WHERE id=:quest_id", array("quest_id"=>$quest_id));
+$genres_id = bd('SELECT', "SELECT genre_id FROM quest_has_genre WHERE quest_id=:id", array("id"=>$quest_id));
+$quest_bookings = bd("SELECT", "SELECT date_and_time, status FROM booking WHERE quest_id=:id", array("id"=>$quest_id));
 $genres = array();
-//$quest_booking_dateTime = array();
+
 foreach ($genres_id as $genre_id) {
-    $genre = bd("SELECT name FROM genre WHERE id=:genre_id", array("genre_id"=>$genre_id["genre_id"]));
+    $genre = bd("SELECT", "SELECT name FROM genre WHERE id=:genre_id", array("genre_id"=>$genre_id["genre_id"]));
     array_push($genres, $genre[0]["name"]);
 }
-// foreach ($quest_bookings as $qb) {
-//     array_push($quest_booking, array('date_and_time' => $qb["date_and_time"], 'status' => $qb["status"]));
-// }
+
 $path_to_img = $domain.$quest[0]["path_to_images"];
 $result = array(
     'title' => $quest[0]["title"],

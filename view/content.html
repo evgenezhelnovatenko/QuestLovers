@@ -1,8 +1,18 @@
 <section class="content">
     <div class="container">
         <h1 class="block-title">Квести</h2>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 justify-content-start">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 justify-content-start align-items-center">
             {{quest_cards}}
+            <div class="col">
+                <div id="add_new_quest_btn">
+                    <a role="button" class="square">
+                        <div role="button" class="circle">
+                            <div class="line horizontal_line"></div>
+                            <div class="line vertical_line"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -11,7 +21,7 @@
         <div class="modal-content text-white bg-dark mb-3">
             
             <div class="modal-header">
-                <h4 class="modal-title"></h4>
+                <h4 id="quest_title" class="modal-title"></h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -25,24 +35,24 @@
                             <div id="quest_genres_list" class="row row-cols-auto ms-0">
                                 <!-- genres from DB -->
                             </div>
-                            <h4>Количество игроков:</h4>
+                            <h4>Кількість гравців:</h4>
                             <p id="quest_number_of_players"></p>
-                            <h4>Возраст:</h4>
+                            <h4>Вік:</h4>
                             <p id="quest_age_limit"></p>
-                            <h4>Время:</h4>
+                            <h4>Тривалість:</h4>
                             <p id="quest_duration"></p>
-                            <h4>Адресс:</h4>
+                            <h4>Адреса:</h4>
                             <p id="quest_address"></p>
                         </div>
                     </div>
                     <div id="quest_desc" class="quest-desc">
-                        <h3>Описание</h3>
+                        <h3>Опис</h3>
                         <p>
                             <!-- description from DB -->
                         </p>
                     </div>
                     <div id="quest_specifics">
-                        <h3>Особенности</h3>
+                        <h3>Особливості</h3>
                         <p>
                             <!-- spesifics from DB -->
                         </p>
@@ -55,6 +65,139 @@
             
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger">Бронювати</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="add_new_quest_modal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-fullscreen-lg-down modal-dialog-centered">
+        <div class="modal-content text-white bg-dark mb-3">
+            
+            <div class="modal-header">
+                <h4 class="modal-title">Добавить новый квест</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form id="add_new_quest_form" action="add_new_quest.php" method="post" enctype="multipart/form-data" class="row g-3">
+
+                        <div class="col-12">
+                            <label for="inputTitle" class="col-sm-2 col-form-label">Назва</label>
+                            <input type="text" class="form-control" name="title" placeholder="Введіть назву квесту" id="inputTitle">
+                        </div>
+                        <div class="col-12 col-xl-6">
+                            <div class="row g-3">
+                                <div class="col-4">
+                                    <label for="inputTypeOfGame" class="form-label">Тип гри: </label>
+                                </div>
+                                <div class="col-auto">
+                                    <select class="form-select" name="type_of_game" id="inputTypeOfGame">
+                                        <option selected>Оберіть тип гри</option>
+                                        {{types_of_games}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-2">
+                                    <label for="inputGenres" class="form-label">Жанри: </label>
+                                </div>
+                                <div class="col-12 col-md-10">
+                                    <div class="row row-cols-3 justify-content-start">
+                                        {{genres}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="inputAgeLimit" class="form-label age-limit-range-lable">З якого віку доступний: </label>
+                            <label for="inputAgeLimit" class="form-label age-limit-range-val"></label>
+                        </div>
+                        <div class="col-6">
+                            <input type="range" class="form-range age-limit-range" name="age_limit" min="0" max="20" step="1" id="inputAgeLimit"  autocomplete="off">
+                        </div>
+                        <div class="col-12 col-xl-6">
+                            <div class="row g-3">
+                                <div class="col-4">
+                                    <label for="inputDifficaltyLevel" class="form-label">Рівень складності: </label>
+                                </div>
+                                <div class="col-auto">
+                                    <select class="form-select" name="level_of_difficalty" id="inputDifficaltyLevel">
+                                        <option selected>Оберіть рівень складності</option>
+                                        <option value="1">1 (Легкий)</option>
+                                        <option value="2">2 (Для більш досвідчених)</option>
+                                        <option value="3">3 (Складний)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                            <div class="row g-3">
+                                <div class="col-4">
+                                    <label for="inputFearLevel" class="form-label">Рівень страху: </label>
+                                </div>
+                                <div class="col-auto">
+                                    <select class="form-select" name="level_of_fear" id="inputFearLevel">
+                                        <option selected>Оберіть рівень страху</option>
+                                        <option value="1">1 (Не страшний)</option>
+                                        <option value="2">2 (Середній рівень страху)</option>
+                                        <option value="3">3 (Страшний)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row g-3">
+                                <div class="col-12 col-xl-4">
+                                    <label for="inputDuration" class="col-form-label">Тривалість: </label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="number" name="duration" id="inputDuration" autocomplete="off">
+                                    <label class="col-form-label">хв.</label>
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="col-6">
+                            <div class="row g-3">
+                                <div class="col-12 col-xl-4">
+                                    <label class="col-form-label">Кількість гравців : </label>
+                                </div>
+                                <div class="col-auto">
+                                    <p>
+                                        <input type="number" name="min_number_of_players" autocomplete="off">
+                                        - 
+                                        <input type="number" name="max_number_of_players" autocomplete="off">
+                                    </p>
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="col-12">
+                            <label for="inputAddress" class="form-label">Адреса</label>
+                            <input type="text" class="form-control" id="inputAddress" name="address" placeholder="Метро, вулиця, дім" autocomplete="off">
+                        </div>
+                        <div class="col-12">
+                            <label for="inputAnnotation" class="form-label">Анотація</label>
+                            <textarea class="form-control" name="annotation" placeholder="Введите короткое описание квеста" id="inputAnnotation" style="height: 100px"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputDesc" class="form-label">Опис</label>
+                            <textarea class="form-control" name="full_desc" placeholder="Введіть повний опис квесту" id="inputDesc" style="height: 100px"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputSpecifics" class="form-label">Особливості</label>
+                            <textarea class="form-control" name="specifics" placeholder="Введіть особливості квесту" id="inputSpecifics" style="height: 100px"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputPic" class="form-label">Зображення</label>
+                            <input type="file" class="form-control" name="image" id="inputPic" accept=".jpg, .jpeg, .png" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                        </div>
+                        <div class="col-12">
+                            <input type="submit" class="btn btn-outline-success" value="Додати">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -7,8 +7,8 @@ switch ($path[1]) {
         home();
         break;
     default:
-    error();
-    break;
+        error();
+        break;
 }
 
 function top($title) {
@@ -18,7 +18,7 @@ function top($title) {
     $view=str_replace("{{title}}",$title,$view);
     
 
-    $data=bd("SELECT * FROM genre", array());
+    $data=bd("SELECT", "SELECT * FROM genre", array());
     $block = "";
     if(count($data)!=0) {
         foreach($data as $d) {
@@ -57,38 +57,64 @@ function content() {
     $view=file_get_contents("view/content.html");
     $domain=$_SERVER["REQUEST_SCHEME"]."://".$_SERVER["SERVER_NAME"];
 
-    $data = bd("SELECT * FROM quest", array());
-    $block = "";
-    if(count($data)!=0) {
-        foreach($data as $d) {
-            $type_of_game = bd("SELECT name FROM type_of_game WHERE id=:type_of_game_id", array("type_of_game_id"=>$d["type_of_game_id"]));
+    $questData = bd("SELECT", "SELECT * FROM quest", array());
+    $genreData=bd("SELECT", "SELECT * FROM genre", array());
+    $typesOfGamesData=bd("SELECT", "SELECT * FROM type_of_game", array());
+    $questCard = "";
+    $genres = "";
+    $typesOfGames = "";
 
-            $block .= '<div class="col">
-            <div id="'.$d["id"].'" class="quest__card card text-white bg-dark mb-3">
-                <a role="button" class="quest-link">
-                    <img src="{{domain}}'.$d["path_to_images"].'" class="card-img-top" alt="...">
-                    <div class="card-img-overlay">
-                        <p class="card-text">'.$d["annotation"].'</p>
+    if(count($questData)!=0) {
+        foreach($questData as $d) {
+            $type_of_game = bd("SELECT", "SELECT name FROM type_of_game WHERE id=:type_of_game_id", array("type_of_game_id"=>$d["type_of_game_id"]));
+
+            $questCard .= '<div class="col">
+                <div id="'.$d["id"].'" class="quest__card card text-white bg-dark mb-3">
+                    <a role="button" class="quest-link">
+                        <img src="{{domain}}'.$d["path_to_images"].'" class="card-img-top" alt="...">
+                        <div class="card-img-overlay">
+                            <p class="card-text">'.$d["annotation"].'</p>
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">'
+                            .$d["title"].'
+                        </h5>
+                        <p class="card-text">'
+                            .$type_of_game[0]["name"].'
+                        </p>
+                        <a href="#" class="btn btn-outline-danger">Бронювати</a>
                     </div>
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">'
-                        .$d["title"].'
-                    </h5>
-                    <p class="card-text">'
-                        .$type_of_game[0]["name"].'
-                    </p>
-                    <a href="#" class="btn btn-outline-danger">Бронювати</a>
-                </div>
                 </div>
             </div>';
         }
     }
     else {
-        $block = '<h5 class="card-title">Нажаль, на даний момент немає жодного квесту</h5>';
+        $questCard = '<h5 class="card-title">Нажаль, на даний момент немає жодного квесту</h5>';
     }
 
-    $view=str_replace("{{quest_cards}}",$block,$view);
+    if (count($genreData) != 0) {
+        foreach($genreData as $d) {
+            $genres .= '<div class="col">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="'.$d["id"].'" id="checkbox'.$d["id"].'">
+                                <label class="form-check-label" for="checkbox{$d["id"]}">'
+                                    .$d["name"].
+                                '</label>
+                            </div>
+                        </div>';
+        }
+    }
+
+    if (count($typesOfGamesData) != 0) {
+        foreach($typesOfGamesData as $d) {
+            $typesOfGames .= '<option value="'.$d["id"].'">'.$d["name"].'</option>';
+        }
+    }
+
+    $view=str_replace("{{quest_cards}}",$questCard,$view);
+    $view=str_replace("{{genres}}", $genres, $view);
+    $view=str_replace("{{types_of_games}}", $typesOfGames, $view);
     $view=str_replace("{{domain}}",$domain,$view);
 
     echo $view;
@@ -107,7 +133,7 @@ function home() {
     bottom();
 }
 
-function bd($sql, $prm){
+function bd($queryType, $sql, $prm){
     $host = 'localhost';
     $db   = 'quest_lovers';
     $user = 'root';
@@ -120,11 +146,17 @@ function bd($sql, $prm){
         PDO::ATTR_EMULATE_PREPARES   => false,
     ];
     $pdo = new PDO($dsn, $user, $pass, $opt);
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($prm);
-    $data=$stmt->fetchAll();
-    //var_dump($data);
-    return $data;
+
+    if ($queryType == 'SELECT') {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($prm);
+        $data=$stmt->fetchAll();
+        //var_dump($data);
+        return $data;
+    }
+    else {
+        $pdo->prepare($sql)->execute($prm);
+    }
 }
 
 function error() {
