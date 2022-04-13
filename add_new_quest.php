@@ -15,6 +15,7 @@ $full_desc = null;
 $specifics = null;
 $image = null;
 $type_of_game_id = null;
+$schedule = "{}";
 
 $genresId = [];
 
@@ -33,7 +34,9 @@ if (isset($_POST['title']) &&
     isset($_POST['annotation']) &&
     isset($_POST['full_desc']) &&
     isset($_POST['specifics']) &&
-    isset($_POST['type_of_game_id'])
+    isset($_POST['type_of_game_id']) &&
+    isset($_POST['genresId']) &&
+    $_FILES && $_FILES["image"]["error"]== UPLOAD_ERR_OK
     ) {
 
     $title =  $_POST['title'];
@@ -49,13 +52,13 @@ if (isset($_POST['title']) &&
     $specifics = $_POST['specifics'];
     $image = $_FILES['image'];
     $type_of_game_id = $_POST['type_of_game_id'];
-    $genresId = $_POST['genresId'];
+    $genresId = explode(",", $_POST['genresId']);
 
 
     $destination_path = getcwd().DIRECTORY_SEPARATOR;
     move_uploaded_file($image['tmp_name'], $destination_path . 'img/quests/'. basename($image['name']));
 
-    $path_to_image = 'img/quests/'. basename($image['name']);
+    $path_to_image = '/img/quests/'. basename($image['name']);
 
     $query = 'INSERT INTO quest (title, 
                                 min_number_of_players, 
@@ -67,7 +70,8 @@ if (isset($_POST['title']) &&
                                 address, 
                                 annotation, 
                                 full_desc, 
-                                specifics,  
+                                specifics, 
+                                schedule, 
                                 path_to_images, 
                                 type_of_game_id)
                     VALUE (:title, 
@@ -80,11 +84,12 @@ if (isset($_POST['title']) &&
                             :address, 
                             :annotation, 
                             :full_desc, 
-                            :specifics, 
+                            :specifics,
+                            :schedule, 
                             :path_to_images, 
                             :type_of_game_id);';
 
-    bd("INSERT", $query, array("title" => $title, 
+    $questId = bd("INSERT", $query, array("title" => $title, 
                     "min_number_of_players" => $min_number_of_players, 
                     "max_number_of_players" => $max_number_of_players,
                     "age_limit" => $age_limit, 
@@ -95,13 +100,22 @@ if (isset($_POST['title']) &&
                     "annotation" => $annotation,
                     "full_desc" => $full_desc,
                     "specifics" => $specifics,
+                    "schedule" => $schedule,
                     "path_to_images" => $path_to_image,
                     "type_of_game_id" => $type_of_game_id)
     );
 
     /* Добавление полей в quest_has_genre */
-    // $query = 'INSERT INTO quest_has_genre (quest_id, genre_id)
-    //                 VALUE (:quest_id, :genre_id);';
+    
+    $query = 'INSERT INTO quest_has_genre (quest_id, genre_id)
+                    VALUE (:quest_id, :genre_id);';
+
+    foreach ($genresId as $genreId) {
+
+        //echo $genreId;
+        bd("INSERT", $query, array("quest_id" => $questId, "genre_id" => $genreId));
+
+    }
 
     
 }

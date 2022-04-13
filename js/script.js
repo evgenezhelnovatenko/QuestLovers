@@ -43,7 +43,7 @@ $('form').on('submit', function() {
     formData.append('annotation', annotation)
     formData.append('full_desc', full_desc)
     formData.append('specifics', specifics)
-    formData.append('genresId[]', genresId)
+    formData.append('genresId', genresId)
     formData.append('type_of_game_id', type_of_game_id)
     formData.append('image', image);
 

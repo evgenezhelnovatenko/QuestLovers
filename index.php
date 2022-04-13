@@ -71,7 +71,7 @@ function content() {
             $questCard .= '<div class="col">
                 <div id="'.$d["id"].'" class="quest__card card text-white bg-dark mb-3">
                     <a role="button" class="quest-link">
-                        <img src="{{domain}}'.$d["path_to_images"].'" class="card-img-top" alt="...">
+                        <img src="{{domain}}'.$d["path_to_images"].'" class="card-quest-img card-img-top" alt="...">
                         <div class="card-img-overlay">
                             <p class="card-text">'.$d["annotation"].'</p>
                         </div>
@@ -156,6 +156,7 @@ function bd($queryType, $sql, $prm){
     }
     else {
         $pdo->prepare($sql)->execute($prm);
+        return $pdo->lastInsertId();
     }
 }
 

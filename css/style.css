@@ -64,6 +64,15 @@ h1 {
 }
 .quest-link {
     position: relative;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+.card-quest-img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 .card-img-overlay {
     display: flex;
@@ -74,7 +83,6 @@ h1 {
     left: 0px;
     width: 100%;
     height: 100%;
-    
     background-color: black;
     color: white;
     opacity: 0;
@@ -236,6 +244,46 @@ input[type="number"] {
     width: 100px;
 }
 
+.inputSchedule-label {
+    width: 100%;
+    text-align: center;
+}
+.schedule-item {
+    display: flex;
+    justify-content: center;
+}
+
+#add_new_schedule_item_btn > .circle{
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border: 2px aqua solid;
+    border-radius: 50%;
+    margin-top: 20px;
+    transition: box-shadow 0.3s;
+}
+
+#add_new_schedule_item_btn > .circle > .line {
+    position: absolute;
+    top: calc((26px - 2px)/2);
+    left: calc((26px - 15px)/2);
+    width: 15px;
+    height: 2px;
+    background-color: aqua;
+    border-radius: 10px;
+    transition: box-shadow 0.3s;
+}
+#add_new_schedule_item_btn > .circle > .vertical_line {
+    transform: rotate(90deg);
+}
+#add_new_schedule_item_btn > .circle:hover,
+#add_new_schedule_item_btn > .circle:hover {
+    opacity: 1;
+    box-shadow: inset 0px 0px 5px 2px aqua;
+}
+#add_new_schedule_item_btn > .circle:hover .line{
+    box-shadow: 0px 0px 3px 1px aqua;
+}
 /* Footer styles */
 .footer__inner {   
     padding-bottom: 60px;

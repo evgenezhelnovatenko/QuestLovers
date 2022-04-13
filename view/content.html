@@ -194,6 +194,54 @@
                             <input type="file" class="form-control" name="image" id="inputPic" accept=".jpg, .jpeg, .png" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                         </div>
                         <div class="col-12">
+                            <label for="" class="form-label">Розклад</label>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <h5 class="inputSchedule-label">Робочі дні</h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 class="inputSchedule-label">Вихідні дні</h5>
+                                </div>
+                                <div class="col-6">
+                                    <div class="schedule-items row row-cols-2 justify-content-center">
+                                        <div class="col-12 schedule-item">
+                                            <input type="time" name="time0"
+                                                min="09:00" max="22:00" required>
+                                            &#8594;
+                                            <input type="number" name="price0">
+                                        </div>
+                                        <div class="col-auto">
+                                            <div id="add_new_schedule_item_btn">
+                                                <div role="button" class="circle">
+                                                    <div class="line horizontal_line"></div>
+                                                    <div class="line vertical_line"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="schedule-items row justify-content-center">
+                                        <div class="col-12 schedule-item">
+                                            <input type="time" name="time0"
+                                                min="09:00" max="22:00" required>
+                                            &#8594;
+                                            <input type="number" name="price0">
+                                        </div>
+                                        <div class="col-auto">
+                                            <div id="add_new_schedule_item_btn">
+                                                <div role="button" class="circle">
+                                                    <div class="line horizontal_line"></div>
+                                                    <div class="line vertical_line"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
                             <input type="submit" class="btn btn-outline-success" value="Додати">
                         </div>
                     </form>
