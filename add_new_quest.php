@@ -13,9 +13,9 @@ $max_number_of_players = null;
 $annotation = null;
 $full_desc = null;
 $specifics = null;
+$schedule = "{}";
 $image = null;
 $type_of_game_id = null;
-$schedule = "{}";
 
 $genresId = [];
 
@@ -34,6 +34,7 @@ if (isset($_POST['title']) &&
     isset($_POST['annotation']) &&
     isset($_POST['full_desc']) &&
     isset($_POST['specifics']) &&
+    isset($_POST['schedule']) &&
     isset($_POST['type_of_game_id']) &&
     isset($_POST['genresId']) &&
     $_FILES && $_FILES["image"]["error"]== UPLOAD_ERR_OK
@@ -50,10 +51,12 @@ if (isset($_POST['title']) &&
     $annotation = $_POST['annotation'];
     $full_desc = $_POST['full_desc'];
     $specifics = $_POST['specifics'];
+    $schedule = $_POST['schedule'];
     $image = $_FILES['image'];
     $type_of_game_id = $_POST['type_of_game_id'];
     $genresId = explode(",", $_POST['genresId']);
 
+    //var_dump(json_encode($schedule));
 
     $destination_path = getcwd().DIRECTORY_SEPARATOR;
     move_uploaded_file($image['tmp_name'], $destination_path . 'img/quests/'. basename($image['name']));

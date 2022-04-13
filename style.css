@@ -251,19 +251,19 @@ input[type="number"] {
 .schedule-item {
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
-#add_new_schedule_item_btn > .circle{
+.add_new_schedule_item_btn {
     position: relative;
     width: 30px;
     height: 30px;
     border: 2px aqua solid;
     border-radius: 50%;
-    margin-top: 20px;
     transition: box-shadow 0.3s;
 }
 
-#add_new_schedule_item_btn > .circle > .line {
+.add_new_schedule_item_btn > .line {
     position: absolute;
     top: calc((26px - 2px)/2);
     left: calc((26px - 15px)/2);
@@ -273,15 +273,15 @@ input[type="number"] {
     border-radius: 10px;
     transition: box-shadow 0.3s;
 }
-#add_new_schedule_item_btn > .circle > .vertical_line {
+.add_new_schedule_item_btn > .vertical_line {
     transform: rotate(90deg);
 }
-#add_new_schedule_item_btn > .circle:hover,
-#add_new_schedule_item_btn > .circle:hover {
+.add_new_schedule_item_btn:hover,
+.add_new_schedule_item_btn:hover {
     opacity: 1;
     box-shadow: inset 0px 0px 5px 2px aqua;
 }
-#add_new_schedule_item_btn > .circle:hover .line{
+.add_new_schedule_item_btn:hover .line{
     box-shadow: 0px 0px 3px 1px aqua;
 }
 /* Footer styles */

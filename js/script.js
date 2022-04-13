@@ -6,6 +6,17 @@ var add_new_quest_modal = new bootstrap.Modal(document.getElementById('add_new_q
     keyboard: false
 });
 
+$("#add_new_weekdays_schedule_item_btn").click(function() {
+
+    var scheduleItems = $("#weekdays-schedule-items > .schedule-item");
+    addNewScheduleItem(scheduleItems);
+})
+$("#add_new_weekend_schedule_item_btn").click(function() {
+
+    var scheduleItems = $("#weekend-schedule-items > .schedule-item");
+    addNewScheduleItem(scheduleItems);
+})
+
 $('form').on('submit', function() {
     var title = $(this).find('input[name="title"]').val();
     var type_of_game_id = $(this).find('select[name="type_of_game"]').val();
@@ -23,53 +34,57 @@ $('form').on('submit', function() {
 
     var genresId = [];
     
+    /* Считываение жанров */
     $(this).find('input:checkbox:checked').each(function() {
         genresId.push(this.value);
     });
 
-    //console.log(genresId.join(', '));
+    /* Считывание рассписания */
+    var schedule = {};
 
+    var weekdaysSchedule = [];
+    var weekendSchedule = [];
+
+    var weekdaysScheduleItems = $("#weekdays-schedule-items > .schedule-item");
+    var weekendScheduleItems = $("#weekend-schedule-items > .schedule-item");
+
+    weekdaysScheduleItems.each(function(index) {
+        var time = $(this).find('input[name="time'+index+'"]').val();
+        var price = $(this).find('input[name="price'+index+'"]').val();
+        //console.log(time + "   " + price);
+        weekdaysSchedule.push({time: time, price: price});
+    });
+    
+    weekendScheduleItems.each(function(index) {
+        var time = $(this).find('input[name="time'+index+'"]').val();
+        var price = $(this).find('input[name="price'+index+'"]').val();
+        //console.log(time + "   " + price);
+
+        weekendSchedule.push({time: time, price: price});
+    });
+
+    schedule.weekdays = weekdaysSchedule;
+    schedule.weekend = weekendSchedule;
+
+    // console.log(schedule);
     
     var formData = new FormData();
 
-    formData.append('title', title)
-    formData.append('address', address)
-    formData.append('age_limit', age_limit)
-    formData.append('level_of_difficalty', level_of_difficalty)
-    formData.append('level_of_fear', level_of_fear)
-    formData.append('duration', duration)
-    formData.append('min_number_of_players', min_number_of_players)
-    formData.append('max_number_of_players', max_number_of_players)
-    formData.append('annotation', annotation)
-    formData.append('full_desc', full_desc)
-    formData.append('specifics', specifics)
-    formData.append('genresId', genresId)
-    formData.append('type_of_game_id', type_of_game_id)
+    formData.append('title', title);
+    formData.append('address', address);
+    formData.append('age_limit', age_limit);
+    formData.append('level_of_difficalty', level_of_difficalty);
+    formData.append('level_of_fear', level_of_fear);
+    formData.append('duration', duration);
+    formData.append('min_number_of_players', min_number_of_players);
+    formData.append('max_number_of_players', max_number_of_players);
+    formData.append('annotation', annotation);
+    formData.append('full_desc', full_desc);
+    formData.append('specifics', specifics);
+    formData.append('schedule', JSON.stringify(schedule));
+    formData.append('genresId', genresId);
+    formData.append('type_of_game_id', type_of_game_id);
     formData.append('image', image);
-
-
-    // $.post(
-    //     'add_new_quest.php',
-    //     {
-    //         'title': title,
-    //         'address': address,
-    //         'age_limit': age_limit,
-    //         'level_of_difficalty': level_of_difficalty,
-    //         'level_of_fear': level_of_fear,
-    //         'duration': duration,
-    //         'min_number_of_players': min_number_of_players,
-    //         'max_number_of_players': max_number_of_players,
-    //         'annotation': annotation,
-    //         'full_desc': full_desc,
-    //         'specifics': specifics,
-    //         'genresId[]': genresId,
-    //         'type_of_game_id': type_of_game_id,
-    //         'image': image
-    //     },
-    //     function (data) {
-    //         console.log(data);
-    //     }
-    // );
     
     $.ajax({
         url: "add_new_quest.php", 
@@ -234,7 +249,33 @@ function getScheduleString(element) {
     return scheduleStr;
 }
 
-function parseStringToHoursAndMinutes(str) {
+function addNewScheduleItem(scheduleItems) {
+
+    var startTimeOfTheLastQuestStr = scheduleItems.last().find('input[type="time"]').val();
+    var duration = $('input[name=duration]').val();
+    var startTimeOfTheLastQuest = stringToTime(startTimeOfTheLastQuestStr);
+    
+    var timeLimit = new Date();
+    timeLimit.setHours(22);
+    timeLimit.setMinutes(0);
+
+    if (startTimeOfTheLastQuest.getTime() > timeLimit.getTime())
+        return;
+
+    var time = getTheStartTimeOfTheNextQuest(startTimeOfTheLastQuest, parseInt(duration) + 10); // +10 - Плюс время на перерыв между квестами.
+
+    var timeStr = timeToString(time);
+
+    scheduleItems.last().after(`<div class="col-12 schedule-item">
+                                    <input type="time" name="time`+scheduleItems.length+`"
+                                        min="09:00" max="22:00" value="`+timeStr+`" required>
+                                    &#8594;
+                                    <input type="number" name="price`+scheduleItems.length+`">
+                                </div>`
+    );
+}
+
+function stringToTime(str) {
     var hoursAndMinutesStr = str.split(':');
     var hoursAndMinutesDate = new Date();
 
@@ -244,9 +285,24 @@ function parseStringToHoursAndMinutes(str) {
     return hoursAndMinutesDate;
 }
 
+function getTheStartTimeOfTheNextQuest(startTimeOfTheLastQuest, duration) {
+
+    var durationMilliseconds = duration * 60 * 1000;
+    
+    startTimeOfTheLastQuest.setTime(startTimeOfTheLastQuest.getTime() + durationMilliseconds);
+    
+    return startTimeOfTheLastQuest;
+}
+
+function timeToString(time) {
+    return time.getHours() + ":" + ((time.getMinutes() < 10) 
+                                        ? ('0' + time.getMinutes()) 
+                                        : time.getMinutes());
+}
+
 function makingTheQuestDateInactive (dayBlock, scheduleElement, bookings, currentDate, date) {
 
-    var schedule_dateTime = parseStringToHoursAndMinutes(scheduleElement.time);
+    var schedule_dateTime = stringToTime(scheduleElement.time);
     date.setHours(schedule_dateTime.getHours());
     date.setMinutes(schedule_dateTime.getMinutes());
 

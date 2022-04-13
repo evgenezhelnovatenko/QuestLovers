@@ -203,7 +203,7 @@
                                     <h5 class="inputSchedule-label">Вихідні дні</h5>
                                 </div>
                                 <div class="col-6">
-                                    <div class="schedule-items row row-cols-2 justify-content-center">
+                                    <div id="weekdays-schedule-items" class="schedule-items row row-cols-2 justify-content-center">
                                         <div class="col-12 schedule-item">
                                             <input type="time" name="time0"
                                                 min="09:00" max="22:00" required>
@@ -211,18 +211,16 @@
                                             <input type="number" name="price0">
                                         </div>
                                         <div class="col-auto">
-                                            <div id="add_new_schedule_item_btn">
-                                                <div role="button" class="circle">
-                                                    <div class="line horizontal_line"></div>
-                                                    <div class="line vertical_line"></div>
-                                                </div>
+                                            <div role="button" id="add_new_weekdays_schedule_item_btn" class="add_new_schedule_item_btn circle">
+                                                <div class="line horizontal_line"></div>
+                                                <div class="line vertical_line"></div>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="schedule-items row justify-content-center">
+                                    <div id="weekend-schedule-items" class="schedule-items row justify-content-center">
                                         <div class="col-12 schedule-item">
                                             <input type="time" name="time0"
                                                 min="09:00" max="22:00" required>
@@ -230,11 +228,9 @@
                                             <input type="number" name="price0">
                                         </div>
                                         <div class="col-auto">
-                                            <div id="add_new_schedule_item_btn">
-                                                <div role="button" class="circle">
-                                                    <div class="line horizontal_line"></div>
-                                                    <div class="line vertical_line"></div>
-                                                </div>
+                                            <div id="add_new_weekend_schedule_item_btn" class="add_new_schedule_item_btn circle">
+                                                <div class="line horizontal_line"></div>
+                                                <div class="line vertical_line"></div>
                                             </div>
                                         </div>
                                     </div>
