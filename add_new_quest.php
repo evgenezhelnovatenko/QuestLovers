@@ -120,8 +120,9 @@ if (isset($_POST['title']) &&
 
     }
 
+    echo "Data was successfully added.";
     
 }
 else
-    echo "ertsfs";
+    echo "Error";
 ?>

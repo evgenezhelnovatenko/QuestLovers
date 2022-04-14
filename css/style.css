@@ -251,9 +251,18 @@ input[type="number"] {
 .schedule-item {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
 }
-
+.schedule-item > input[type="time"] {
+    max-width: 150px;
+}
+#duplicate_schedule_to_weekend_btn > p{
+    text-align: center;
+    padding: 0 5px 0 5px;
+    border: 2px aqua solid;
+    border-radius: 5px;
+}
 .add_new_schedule_item_btn {
     position: relative;
     width: 30px;
