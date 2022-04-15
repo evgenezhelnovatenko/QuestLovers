@@ -13,8 +13,19 @@
                 <div class="container-fluid">
                     <div class="row row-cols-1 row-cols-lg-2">
                         <div class="col mb-2 mb-xl-0">
-                            <img id="quest_modal-img" src="" class="card-img-top"
-                                alt="...">
+                            <div id="quest-full-info-img-carousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                  
+                                </div>
+                                <button class="carousel-control-prev quest-modal-carousel-control-prev" type="button" data-bs-target="#quest-full-info-img-carousel" data-bs-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next quest-modal-carousel-control-next" type="button" data-bs-target="#quest-full-info-img-carousel" data-bs-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
                         </div>
                         <div class="col">
                             <div id="quest_genres_list" class="row row-cols-auto ms-0">
@@ -180,7 +191,7 @@
                         </div>
                         <div class="col-12">
                             <label for="inputPic" class="form-label">Зображення</label>
-                            <input type="file" class="form-control" name="image" id="inputPic" accept=".jpg, .jpeg, .png" aria-describedby="inputGroupFileAddon04" aria-label="Upload"  required>
+                            <input type="file" class="form-control" name="image" id="inputPic" accept=".jpg, .jpeg, .png" aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple required>
                         </div>
                         <div class="col-12">
                             <label for="" class="form-label">Розклад</label>

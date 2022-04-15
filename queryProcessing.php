@@ -4,6 +4,8 @@ require_once("index.php");
 
 if (isset($_POST['action'])) {
 
+    $error = "";
+
     switch ($_POST['action']) {
     case 'INSERT': {
         $title = null;
@@ -41,7 +43,7 @@ if (isset($_POST['action'])) {
             isset($_POST['schedule']) &&
             isset($_POST['type_of_game_id']) &&
             isset($_POST['genresId']) &&
-            $_FILES && $_FILES["image"]["error"]== UPLOAD_ERR_OK
+            isset($_FILES)
             ) {
 
             $title =  $_POST['title'];
@@ -56,16 +58,43 @@ if (isset($_POST['action'])) {
             $full_desc = $_POST['full_desc'];
             $specifics = $_POST['specifics'];
             $schedule = $_POST['schedule'];
-            $image = $_FILES['image'];
             $type_of_game_id = $_POST['type_of_game_id'];
             $genresId = explode(",", $_POST['genresId']);
 
             //var_dump(json_encode($schedule));
 
-            $destination_path = getcwd().DIRECTORY_SEPARATOR;
-            move_uploaded_file($image['tmp_name'], $destination_path . 'img/quests/'. basename($image['name']));
+            $images = array();
+            $diff = count($_FILES['images']) - count($_FILES['images'], COUNT_RECURSIVE);
+            if ($diff == 0) {
+                $images = array($_FILES['images']);
+            } else {
+                foreach($_FILES['images'] as $k => $l) {
+                    foreach($l as $i => $v) {
+                        $images[$i][$k] = $v;
+                    }
+                }		
+            }
 
-            $path_to_image = '/img/quests/'. basename($image['name']);
+            /* Загрузака изображений на сервер */
+
+            //$test = "";
+            $numberOfImages = 0;
+            foreach ($images as $image) {
+                if (!empty($image['error']) || empty($image['tmp_name'])) {
+                    $error = 'Не удалось загрузить файл.';
+                } elseif ($image['tmp_name'] == 'none' || !is_uploaded_file($image['tmp_name'])) {
+                    $error = 'Не удалось загрузить файл.';
+                } else {
+                    $destination_path = getcwd().DIRECTORY_SEPARATOR;
+                    move_uploaded_file($image['tmp_name'], $destination_path . 'img/quests/' . translit($title) . "_" . $numberOfImages . ".jpeg");
+                    //$test .= $destination_path . 'img/quests/' . translit($title) . "_" . $numberOfImages . ".jpeg;  ";
+                    $numberOfImages++;
+                }
+            }
+
+            $path_to_image = '/img/quests/' . translit($title) . "_";
+
+            //echo $test;
 
             $query = 'INSERT INTO quest (title, 
                                         min_number_of_players, 
@@ -80,6 +109,7 @@ if (isset($_POST['action'])) {
                                         specifics, 
                                         schedule, 
                                         path_to_images, 
+                                        number_of_images,
                                         type_of_game_id)
                             VALUE (:title, 
                                     :min_number_of_players, 
@@ -94,6 +124,7 @@ if (isset($_POST['action'])) {
                                     :specifics,
                                     :schedule, 
                                     :path_to_images, 
+                                    :number_of_images,
                                     :type_of_game_id);';
 
             $questId = bd("INSERT", $query, array("title" => $title, 
@@ -109,8 +140,10 @@ if (isset($_POST['action'])) {
                             "specifics" => $specifics,
                             "schedule" => $schedule,
                             "path_to_images" => $path_to_image,
+                            "number_of_images" => $numberOfImages,
                             "type_of_game_id" => $type_of_game_id)
             );
+
 
             /* Добавление полей в quest_has_genre */
             
@@ -140,7 +173,7 @@ if (isset($_POST['action'])) {
                                                         )
                                             )
                             )
-                );
+            );
         }
         else
             echo json_encode(array("status" => "ERROR"));

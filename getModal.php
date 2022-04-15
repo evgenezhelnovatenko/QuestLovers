@@ -36,6 +36,8 @@ $result = array(
     'full_desc' => $quest[0]["full_desc"],
     'specifics' => $quest[0]["specifics"],
     'genres' => $genres,
+    'path_to_images' => $quest[0]['path_to_images'],
+    'number_of_images' => $quest[0]['number_of_images'],
     'schedule' => $quest[0]["schedule"],
     'bookings' => $quest_bookings
 );

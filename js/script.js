@@ -149,69 +149,8 @@
 
     $(".quest-link").click(function(){
 
-
-        $.get('getModal.php', {quest_id: $(this).parent().attr('id')}, function(quest) {
-
-            $("#quest_title").html(quest.title);
-            $("#quest_modal-img").attr('src', quest.path_to_img);
-            $("#quest_desc > p").html(quest.full_desc);
-            $("#quest_number_of_players").html(quest.number_of_players);
-            $("#quest_age_limit").html(quest.age_limit);
-            $("#quest_duration").html(quest.duration);
-            $("#quest_address").html(quest.address);
-            $("#quest_specifics > p").html(quest.specifics);
-
-            // Загрузка жанров
-            $("#quest_genres_list").empty();
-            quest.genres.forEach(genre => {
-                $("#quest_genres_list").append(`<div class="col mb-2 px-1">
-                                                    <div class="quest_genre">`
-                                                        +genre+
-                                                    `</div>
-                                                </div>`
-                );
-            });
-
-            // Загрузка расписания
-            
-            $("#quest_schedule").empty();
-
-            var scheduleJson = JSON.parse(quest.schedule);
-            if (Object.keys(scheduleJson).length != 0 || scheduleJson.constructor != Object) {
-
-                $("#quest_schedule").html(`<h3>Розклад</h3>
-                                            <div id="contentContainer" class="carousel slide" data-bs-interval="false" data-bs-wrap="false">
-                                                <button class="carousel-control-prev" type="button" data-bs-target="#contentContainer" data-bs-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Previous</span>
-                                                </button>
-                                                <div id="schedule_carusel-inner" class="carousel-inner">
-
-                                                </div>
-                                                <button class="carousel-control-next" type="button" data-bs-target="#contentContainer" data-bs-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Next</span>
-                                                </button>
-                                            </div>`
-                );
-
-                var page_number = 0;
-                var days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
-                var month = ["Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"];
-                var date = new Date();
-            
-                appendScheduleWeekItem(page_number, date, days, month, scheduleJson, quest.bookings);
-                page_number++;
-                appendScheduleWeekItem(page_number, date, days, month, scheduleJson, quest.bookings);
-                page_number++;
-                appendScheduleWeekItem(page_number, date, days, month, scheduleJson, quest.bookings);
-                page_number++;
-                appendScheduleWeekItem(page_number, date, days, month, scheduleJson, quest.bookings);
-
-            }
-
-        }, "json");
-
+        loadFullInfoAboutQuest(this);
+        
         quest_full_info_modal.show();
 
     });
@@ -432,7 +371,6 @@
         var annotation = $(form).find('textarea[name="annotation"]').val();
         var full_desc = $(form).find('textarea[name="full_desc"]').val();
         var specifics = $(form).find('textarea[name="specifics"]').val();
-        var image = $(form).find('input[name="image"]').prop('files')[0];
 
         var genresId = [];
         
@@ -485,7 +423,10 @@
         formData.append('schedule', JSON.stringify(schedule));
         formData.append('genresId', genresId);
         formData.append('type_of_game_id', type_of_game_id);
-        formData.append('image', image);
+
+        $.each($(form).find('input[name="image"]')[0].files,function(key, input){
+			formData.append('images[]', input);
+		});
         
         $.ajax({
             url: "queryProcessing.php", 
@@ -495,6 +436,7 @@
             contentType: false,
             success: function (receivedData) {
                 
+                //console.log(receivedData);
                 var receivedDataJSON = JSON.parse(receivedData);
                 var quest = JSON.parse(receivedDataJSON.quest);
                 var domain = receivedDataJSON.domain;
@@ -508,7 +450,7 @@
                     .before(`<div class="col">
                                 <div id="`+ quest.id +`" class="quest__card card text-white bg-dark mb-3">
                                     <a role="button" class="quest-link">
-                                        <img src="`+ domain + quest.path_to_images +`" class="card-quest-img card-img-top" alt="...">
+                                        <img src="`+ domain + quest.path_to_images +`0.jpeg" class="card-quest-img card-img-top" alt="...">
                                         <div class="card-img-overlay">
                                             <p class="card-text">`+ quest.annotation +`</p>
                                         </div>
@@ -531,12 +473,17 @@
                             </div>`
                     );
 
-                    $('.quest_list > .col').last().prev().find('.delete_quest_btn').click(function() {
 
+                    // Добавляем обработчики на новосозданную карточку квеста.
+                    $('.quest_list > .col').last().prev().find('.quest-link').click(function(){
+                        loadFullInfoAboutQuest(this);
+                        quest_full_info_modal.show();
+                    });
+                    $('.quest_list > .col').last().prev().find('.delete_quest_btn').click(function() {
                         var questBlock = $(this).closest('.quest__card');
                         deleteQuest(questBlock);
-                        
                     });
+
 
                     $(form).removeClass('was-validated');
                     form.reset();
@@ -568,6 +515,82 @@
                 }
             }
         });
+    }
+
+    function loadFullInfoAboutQuest(questBlock) {
+        $.get('getModal.php', {quest_id: $(questBlock).parent().attr('id')}, function(quest) {
+
+            $("#quest_title").html(quest.title);
+            //$("#quest_modal-img").attr('src', quest.path_to_img);
+            $("#quest_desc > p").html(quest.full_desc);
+            $("#quest_number_of_players").html(quest.number_of_players);
+            $("#quest_age_limit").html(quest.age_limit);
+            $("#quest_duration").html(quest.duration);
+            $("#quest_address").html(quest.address);
+            $("#quest_specifics > p").html(quest.specifics);
+
+            // Загрузка изображений
+            var carouselInner = $("#quest-full-info-img-carousel > .carousel-inner");
+
+            for (var i = 0; i < quest.number_of_images; i++) {
+                carouselInner.append(`<div class="carousel-item quest-modal-carousel-item`+(i == 0 ? ` active` : ``)+`">
+                                        <img class="quest_modal-img d-block w-100 quest-modal-carousel-item-img" src="`+ quest.path_to_images + i + `.jpeg" class="card-img-top"
+                                            alt="...">
+                                    </div>`
+                );
+            }
+
+            // Загрузка жанров
+            $("#quest_genres_list").empty();
+            quest.genres.forEach(genre => {
+                $("#quest_genres_list").append(`<div class="col mb-2 px-1">
+                                                    <div class="quest_genre">`
+                                                        +genre+
+                                                    `</div>
+                                                </div>`
+                );
+            });
+
+            // Загрузка расписания
+            
+            $("#quest_schedule").empty();
+
+            var scheduleJson = JSON.parse(quest.schedule);
+            if (Object.keys(scheduleJson).length != 0 || scheduleJson.constructor != Object) {
+
+                $("#quest_schedule").html(`<h3>Розклад</h3>
+                                            <div id="contentContainer" class="carousel slide" data-bs-interval="false" data-bs-wrap="false">
+                                                <button class="carousel-control-prev schedule-carousel-control-prev" type="button" data-bs-target="#contentContainer" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <div id="schedule_carusel-inner" class="carousel-inner">
+
+                                                </div>
+                                                <button class="carousel-control-next schedule-carousel-control-next" type="button" data-bs-target="#contentContainer" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Next</span>
+                                                </button>
+                                            </div>`
+                );
+
+                var page_number = 0;
+                var days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+                var month = ["Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"];
+                var date = new Date();
+            
+                appendScheduleWeekItem(page_number, date, days, month, scheduleJson, quest.bookings);
+                page_number++;
+                appendScheduleWeekItem(page_number, date, days, month, scheduleJson, quest.bookings);
+                page_number++;
+                appendScheduleWeekItem(page_number, date, days, month, scheduleJson, quest.bookings);
+                page_number++;
+                appendScheduleWeekItem(page_number, date, days, month, scheduleJson, quest.bookings);
+
+            }
+
+        }, "json");
+
     }
 
     function makingTheQuestDateInactive (dayBlock, scheduleElement, bookings, currentDate, date) {

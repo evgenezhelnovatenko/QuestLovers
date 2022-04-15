@@ -172,6 +172,18 @@ h1 {
     box-shadow: 0px 0px 3px 1px aqua;
 }
 /*Quest modal window*/
+.quest-modal-carousel-item {
+    position: relative;
+    padding-top: 56.25%;
+}
+.quest-modal-carousel-item-img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .quest_genre {
     border: 1px aqua solid;
     border-radius: 2px;
@@ -193,8 +205,8 @@ h1 {
 .day {
     text-align: center;
 }
-.carousel-control-next,
-.carousel-control-prev {
+.schedule-carousel-control-next,
+.schedule-carousel-control-prev {
     width: 5%;
     height: 100px;
     position: relative;
