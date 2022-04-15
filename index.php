@@ -40,6 +40,33 @@ function top($title) {
 function bottom() {
     $view=file_get_contents("view/bottom.html");
     $domain=$_SERVER["REQUEST_SCHEME"]."://".$_SERVER["SERVER_NAME"];
+    $genreData=bd("SELECT", "SELECT * FROM genre", array());
+    $typesOfGamesData=bd("SELECT", "SELECT * FROM type_of_game", array());
+
+    $genres = "";
+    $typesOfGames = "";
+
+    if (count($genreData) != 0) {
+        foreach($genreData as $d) {
+            $genres .= '<div class="col">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="'.$d["id"].'" id="checkbox'.$d["id"].'">
+                                <label class="form-check-label" for="checkbox{$d["id"]}">'
+                                    .$d["name"].
+                                '</label>
+                            </div>
+                        </div>';
+        }
+    }
+
+    if (count($typesOfGamesData) != 0) {
+        foreach($typesOfGamesData as $d) {
+            $typesOfGames .= '<option value="'.$d["id"].'">'.$d["name"].'</option>';
+        }
+    }
+    
+    $view=str_replace("{{genres}}", $genres, $view);
+    $view=str_replace("{{types_of_games}}", $typesOfGames, $view);
     $view=str_replace("{{domain}}",$domain,$view);
 
     echo $view;
@@ -58,11 +85,9 @@ function content() {
     $domain=$_SERVER["REQUEST_SCHEME"]."://".$_SERVER["SERVER_NAME"];
 
     $questData = bd("SELECT", "SELECT * FROM quest", array());
-    $genreData=bd("SELECT", "SELECT * FROM genre", array());
-    $typesOfGamesData=bd("SELECT", "SELECT * FROM type_of_game", array());
+    
     $questCard = "";
-    $genres = "";
-    $typesOfGames = "";
+    
 
     if(count($questData)!=0) {
         foreach($questData as $d) {
@@ -85,6 +110,11 @@ function content() {
                         </p>
                         <a href="#" class="btn btn-outline-danger">Бронювати</a>
                     </div>
+                    <div type="button" class="delete_quest_btn">
+                        <div class="circle">
+                            <div class="line"></div>
+                        </div>
+                    </div>
                 </div>
             </div>';
         }
@@ -93,28 +123,9 @@ function content() {
         $questCard = '<h5 class="card-title">Нажаль, на даний момент немає жодного квесту</h5>';
     }
 
-    if (count($genreData) != 0) {
-        foreach($genreData as $d) {
-            $genres .= '<div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="'.$d["id"].'" id="checkbox'.$d["id"].'">
-                                <label class="form-check-label" for="checkbox{$d["id"]}">'
-                                    .$d["name"].
-                                '</label>
-                            </div>
-                        </div>';
-        }
-    }
-
-    if (count($typesOfGamesData) != 0) {
-        foreach($typesOfGamesData as $d) {
-            $typesOfGames .= '<option value="'.$d["id"].'">'.$d["name"].'</option>';
-        }
-    }
+    
 
     $view=str_replace("{{quest_cards}}",$questCard,$view);
-    $view=str_replace("{{genres}}", $genres, $view);
-    $view=str_replace("{{types_of_games}}", $typesOfGames, $view);
     $view=str_replace("{{domain}}",$domain,$view);
 
     echo $view;
@@ -147,17 +158,23 @@ function bd($queryType, $sql, $prm){
     ];
     $pdo = new PDO($dsn, $user, $pass, $opt);
 
-    if ($queryType == 'SELECT') {
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($prm);
-        $data=$stmt->fetchAll();
-        //var_dump($data);
-        return $data;
+    switch ($queryType){
+        case 'SELECT': {
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($prm);
+            $data=$stmt->fetchAll();
+            //var_dump($data);
+            return $data;
+        }
+        case 'INSERT': {
+            $pdo->prepare($sql)->execute($prm);
+            return $pdo->lastInsertId();
+        }
+        case 'DELETE': {
+            $pdo->prepare($sql)->execute($prm);
+        }
     }
-    else {
-        $pdo->prepare($sql)->execute($prm);
-        return $pdo->lastInsertId();
-    }
+
 }
 
 function error() {

@@ -58,6 +58,7 @@ h1 {
     min-height: 800px;
 }
 .quest__card {
+    position: relative;
     width: 100%;
     min-width: 300px;
     border: none;
@@ -96,6 +97,34 @@ h1 {
 }
 .quest-desc {
     padding: 10px 0 10px 0;
+}
+.delete_quest_btn {
+    position: absolute;
+    top: -12.5px;
+    right: -12.5px;
+}
+.delete_quest_btn > .circle {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border: 1px black solid;
+    border-radius: 50%;
+    background-color: rgb(255, 70, 70);
+    transition: box-shadow 0.3s;
+}
+.delete_quest_btn > .circle > .line {
+    position: absolute;
+    top: calc((23px - 2px)/2);
+    left: calc((23px - 13px)/2);
+    width: 13px;
+    height: 2px;
+    background-color: white;
+    border-radius: 10px;
+    transition: box-shadow 0.3s;
+}
+.delete_quest_btn:hover .circle {
+    background-color: rgb(255, 0, 0);
+    transition: background-color 0.3s;
 }
 #add_new_quest_btn {
     display: flex;

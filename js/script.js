@@ -9,6 +9,14 @@
         keyboard: false
     });
 
+
+    $('.delete_quest_btn').click(function() {
+
+        var questBlock = $(this).closest('.quest__card');
+        deleteQuest(questBlock);
+        
+    });
+
     $("#add_new_weekdays_schedule_item_btn").click(function() {
 
         var scheduleItems = $("#weekdays-schedule-items > .schedule-item");
@@ -38,8 +46,6 @@
     });
 
     $('#duplicate_schedule_to_weekend_btn').click(function() {
-
-        console.log("kyky");
 
         var weekendSchedule = $('#weekend-schedule-items');
         var weekendScheduleItems = weekendSchedule.find('.schedule-item');
@@ -141,9 +147,8 @@
     });
 
 
-    
-
     $(".quest-link").click(function(){
+
 
         $.get('getModal.php', {quest_id: $(this).parent().attr('id')}, function(quest) {
 
@@ -465,6 +470,7 @@
         
         var formData = new FormData();
 
+        formData.append('action', 'INSERT');
         formData.append('title', title);
         formData.append('address', address);
         formData.append('age_limit', age_limit);
@@ -482,14 +488,84 @@
         formData.append('image', image);
         
         $.ajax({
-            url: "add_new_quest.php", 
+            url: "queryProcessing.php", 
             type: 'POST',
             data: formData, 
             processData: false,
             contentType: false,
-            success: function (data) {
-                console.log(data);
-                form.reset();
+            success: function (receivedData) {
+                
+                var receivedDataJSON = JSON.parse(receivedData);
+                var quest = JSON.parse(receivedDataJSON.quest);
+                var domain = receivedDataJSON.domain;
+
+                if (receivedDataJSON.status === 'SUCCESS') {
+
+                    //console.log(receivedDataJSON.quest_id);
+
+                    $('.quest_list > .col')
+                    .last()
+                    .before(`<div class="col">
+                                <div id="`+ quest.id +`" class="quest__card card text-white bg-dark mb-3">
+                                    <a role="button" class="quest-link">
+                                        <img src="`+ domain + quest.path_to_images +`" class="card-quest-img card-img-top" alt="...">
+                                        <div class="card-img-overlay">
+                                            <p class="card-text">`+ quest.annotation +`</p>
+                                        </div>
+                                    </a>
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            `+ quest.title +`
+                                        </h5>
+                                        <p class="card-text">
+                                            `+ quest.type_of_game +`
+                                        </p>
+                                        <a href="#" class="btn btn-outline-danger">Бронювати</a>
+                                    </div>
+                                    <div type="button" class="delete_quest_btn">
+                                        <div class="circle">
+                                            <div class="line"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`
+                    );
+
+                    $('.quest_list > .col').last().prev().find('.delete_quest_btn').click(function() {
+
+                        var questBlock = $(this).closest('.quest__card');
+                        deleteQuest(questBlock);
+                        
+                    });
+
+                    $(form).removeClass('was-validated');
+                    form.reset();
+                    add_new_quest_modal.hide();
+                }
+
+            }
+        });
+    }
+
+    function deleteQuest(questBlock) {
+
+        var questId = questBlock.attr('id');
+
+        var formData = new FormData();
+        formData.append('action', 'DELETE');
+        formData.append('quest_id', questId);
+
+        $.ajax({
+            url: "queryProcessing.php", 
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (data) => {
+                if (data === 'SUCCESS') {
+                    console.log(data);
+                    questBlock.closest('div.col').remove();
+                }
             }
         });
     }
