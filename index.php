@@ -96,7 +96,7 @@ function content() {
             $questCard .= '<div class="col">
                 <div id="'.$d["id"].'" class="quest__card card text-white bg-dark mb-3">
                     <a role="button" class="quest-link">
-                        <img src="{{domain}}'.$d["path_to_images"].'0.jpeg" class="card-quest-img card-img-top" alt="...">
+                        <img src="{{domain}}/'.$d["path_to_images"].'0.jpeg" class="card-quest-img card-img-top" alt="...">
                         <div class="card-img-overlay">
                             <p class="card-text">'.$d["annotation"].'</p>
                         </div>
@@ -145,18 +145,8 @@ function home() {
 }
 
 function bd($queryType, $sql, $prm){
-    $host = 'localhost';
-    $db   = 'quest_lovers';
-    $user = 'root';
-    $pass = 'dinamo03';
-    $charset = 'utf8';
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-    $opt = [
-        PDO::ATTR_ERRMODE =>PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES   => false,
-    ];
-    $pdo = new PDO($dsn, $user, $pass, $opt);
+    
+    $pdo = getDBConnection();
 
     switch ($queryType){
         case 'SELECT': {
@@ -175,6 +165,22 @@ function bd($queryType, $sql, $prm){
         }
     }
 
+}
+
+function getDBConnection() {
+    $host = 'localhost';
+    $db   = 'quest_lovers';
+    $user = 'root';
+    $pass = 'dinamo03';
+    $charset = 'utf8';
+    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    $opt = [
+        PDO::ATTR_ERRMODE =>PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES   => false,
+    ];
+
+    return new PDO($dsn, $user, $pass, $opt);
 }
 
 function error() {

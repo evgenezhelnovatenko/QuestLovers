@@ -320,7 +320,7 @@
                     if (!thisTimeObj.hasClass('is-invalid')) {
                         thisTimeObj.addClass('is-invalid');
                     }
-                    thisTimeObj.val('');
+                    //thisTimeObj.val('');
                     return false;
                 }
                 else {
@@ -345,7 +345,7 @@
                     if (!nextTimeObj.hasClass('is-invalid')) {
                         nextTimeObj.addClass('is-invalid');
                     }
-                    nextTimeObj.val('');
+                    //nextTimeObj.val('');
 
                 }
                 else {
@@ -436,13 +436,12 @@
             contentType: false,
             success: function (receivedData) {
                 
-                //console.log(receivedData);
                 var receivedDataJSON = JSON.parse(receivedData);
-                var quest = JSON.parse(receivedDataJSON.quest);
-                var domain = receivedDataJSON.domain;
-
+                
                 if (receivedDataJSON.status === 'SUCCESS') {
-
+                    
+                    var quest = JSON.parse(receivedDataJSON.quest);
+                    var domain = receivedDataJSON.domain;
                     //console.log(receivedDataJSON.quest_id);
 
                     $('.quest_list > .col')
@@ -450,7 +449,7 @@
                     .before(`<div class="col">
                                 <div id="`+ quest.id +`" class="quest__card card text-white bg-dark mb-3">
                                     <a role="button" class="quest-link">
-                                        <img src="`+ domain + quest.path_to_images +`0.jpeg" class="card-quest-img card-img-top" alt="...">
+                                        <img src="`+ domain + `/` + quest.path_to_images +`0.jpeg" class="card-quest-img card-img-top" alt="...">
                                         <div class="card-img-overlay">
                                             <p class="card-text">`+ quest.annotation +`</p>
                                         </div>
@@ -484,10 +483,19 @@
                         deleteQuest(questBlock);
                     });
 
-
                     $(form).removeClass('was-validated');
                     form.reset();
                     add_new_quest_modal.hide();
+                }
+                else if (receivedDataJSON.status === 'ERROR') {
+                    console.log("error");
+                    var errors = receivedDataJSON.errors;
+
+                    if (errors.length != 0) {
+                        errors.forEach(element => {
+                            console.log(element);
+                        });
+                    }
                 }
 
             }
@@ -521,7 +529,6 @@
         $.get('getModal.php', {quest_id: $(questBlock).parent().attr('id')}, function(quest) {
 
             $("#quest_title").html(quest.title);
-            //$("#quest_modal-img").attr('src', quest.path_to_img);
             $("#quest_desc > p").html(quest.full_desc);
             $("#quest_number_of_players").html(quest.number_of_players);
             $("#quest_age_limit").html(quest.age_limit);

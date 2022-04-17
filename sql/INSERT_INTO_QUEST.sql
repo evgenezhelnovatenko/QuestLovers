@@ -8,7 +8,7 @@ insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, m
             'В связи с эпидемиологической ситуацией в городе посещение квеста доступно только лицам, имеющим ПЦР-тест или Covid-сертификат. Дети, младше 18 лет, должны приходить на квест со взрослым, у которого есть ПЦР-тест или Covid-сертификат. На входе проводится термометрия. При посещении квеста необходимо наличие маски. Фотографии игроков: организатор в течение 1-2 дней высылает на почту. Видео прохождения квеста: услуга не предоставляется.',
             '{}',
             0,
-            '/img/quests/kadroom_illuziya_obmana_photo_',
+            'img/quests/kadroom_illuziya_obmana_photo_',
             1);
             
 insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, schedule, number_of_review, path_to_images, number_of_images)
@@ -21,7 +21,7 @@ insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, m
             'Ранее квест назывался «Игра на выживание».<br>Доступны также режимы:<br><ul><li>игра на выживание, 14+ (15-20 мин.);</li><li>эксклюзивное шоу, 18+ (15-40 мин.).</li></ul>Скидка в день рождения: в команде более четырех игроков один участник проходит бесплатно.',
             '{}',
             0,
-            '/img/quests/insomnia_ekstremalnoe_shou_photo_',
+            'img/quests/insomnia_ekstremalnoe_shou_photo_',
             1);
             
 insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, schedule, number_of_review, path_to_images, number_of_images)
@@ -43,7 +43,7 @@ insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, m
 			Видео прохождения квеста: услуга не предоставляется.',
             '{"weekdays":[{"time":"11:00","price":750},{"time":"12:30","price":750},{"time":"14:00","price":750},{"time":"15:00","price":750},{"time":"17:00","price":750},{"time":"19:00","price":850},{"time":"20:30","price":850},{"time":"22:00","price":1000}],"weekend":[{"time":"11:00","price":850},{"time":"12:30","price":850},{"time":"14:00","price":850},{"time":"15:00","price":850},{"time":"17:00","price":850},{"time":"19:00","price":900},{"time":"20:30","price":900},{"time":"22:00","price":1000}]}',
             0,
-            '/img/quests/puzzle_tainaya_lichnost_photo_',
+            'img/quests/puzzle_tainaya_lichnost_photo_',
             1);
             
 insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, max_number_of_players, age_limit, age_limit_with_accompaniment, level_of_difficulty, level_of_fear, rating, duration, address, phone_number, email, annotation, full_desc, specifics, schedule, number_of_review, path_to_images, number_of_images)
@@ -67,5 +67,5 @@ insert into quest_lovers.quest (title, type_of_game_id, min_number_of_players, m
 			Видео прохождения квеста: услуга не предоставляется.',
             '{"weekdays":[{"time":"11:00","price":750},{"time":"12:30","price":750},{"time":"14:00","price":750},{"time":"15:00","price":750},{"time":"17:00","price":750},{"time":"19:00","price":850},{"time":"20:30","price":850},{"time":"22:00","price":1000}],"weekend":[{"time":"11:00","price":850},{"time":"12:30","price":850},{"time":"14:00","price":850},{"time":"15:00","price":850},{"time":"17:00","price":850},{"time":"19:00","price":900},{"time":"20:30","price":900},{"time":"22:00","price":1000}]}',
             0,
-            '/img/quests/quest_land_lara_croft_hram_nadpisei_photo_',
+            'img/quests/quest_land_lara_croft_hram_nadpisei_photo_',
             1);
