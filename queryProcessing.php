@@ -34,7 +34,7 @@ if (isset($_POST['action'])) {
             isset($_POST['min_number_of_players']) &&
             isset($_POST['max_number_of_players']) &&
             isset($_POST['age_limit']) &&
-            isset($_POST['level_of_difficalty']) &&
+            isset($_POST['level_of_difficulty']) &&
             isset($_POST['level_of_fear']) &&
             isset($_POST['duration']) &&
             isset($_POST['address']) &&
@@ -51,7 +51,7 @@ if (isset($_POST['action'])) {
             $min_number_of_players = $_POST['min_number_of_players'];
             $max_number_of_players = $_POST['max_number_of_players'];
             $age_limit = $_POST['age_limit'];
-            $level_of_difficalty = $_POST['level_of_difficalty'];
+            $level_of_difficulty = $_POST['level_of_difficulty'];
             $level_of_fear = $_POST['level_of_fear'];
             $duration = $_POST['duration'];
             $address = $_POST['address'];
@@ -72,7 +72,7 @@ if (isset($_POST['action'])) {
             // if (!is_int($age_limit)) {
             //     array_push($errors, "Поле з віковим обмеженням повинно бути числовим.");
             // }
-            // if (!is_int($level_of_difficalty)) {
+            // if (!is_int($level_of_difficulty)) {
             //     array_push($errors, "Поле з рівнем складності повинно бути числовим.");
             // }
             // if (!is_int($level_of_fear)) {
@@ -108,7 +108,7 @@ if (isset($_POST['action'])) {
             /* Загрузка изображений на сервер */
 
             //$test = "";
-            $path_to_image = 'img/quests/' . translit($title) . "_";
+            $path_to_images = 'img/quests/' . translit($title) . "_";
             $numberOfImages = 0;
             foreach ($images as $image) {
                 if (!empty($image['error']) || empty($image['tmp_name'])) {
@@ -117,7 +117,7 @@ if (isset($_POST['action'])) {
                     $error = 'Не удалось загрузить файл.';
                 } else {
                     
-                    move_uploaded_file($image['tmp_name'], $destination_path . $path_to_image . $numberOfImages . ".jpeg");
+                    move_uploaded_file($image['tmp_name'], $destination_path . $path_to_images . $numberOfImages . ".jpeg");
                     //$test .= $destination_path . 'img/quests/' . translit($title) . "_" . $numberOfImages . ".jpeg;  ";
                     $numberOfImages++;
                 }
@@ -132,42 +132,12 @@ if (isset($_POST['action'])) {
                 echo json_encode(array("status" => "ERROR", "errors" => $errors));
             } else {
 
-                $query = 'INSERT INTO quest (title, 
-                                        min_number_of_players, 
-                                        max_number_of_players, 
-                                        age_limit, 
-                                        level_of_difficulty, 
-                                        level_of_fear,
-                                        duration, 
-                                        address, 
-                                        annotation, 
-                                        full_desc, 
-                                        specifics, 
-                                        schedule, 
-                                        path_to_images, 
-                                        number_of_images,
-                                        type_of_game_id)
-                            VALUE (:title, 
-                                    :min_number_of_players, 
-                                    :max_number_of_players, 
-                                    :age_limit, 
-                                    :level_of_difficulty,
-                                    :level_of_fear,
-                                    :duration, 
-                                    :address, 
-                                    :annotation, 
-                                    :full_desc, 
-                                    :specifics,
-                                    :schedule, 
-                                    :path_to_images, 
-                                    :number_of_images,
-                                    :type_of_game_id);';
 
-                $questId = bd("INSERT", $query, array("title" => $title, 
+                $questId = insertIntoQuest(array("title" => $title, 
                                 "min_number_of_players" => $min_number_of_players, 
                                 "max_number_of_players" => $max_number_of_players,
                                 "age_limit" => $age_limit, 
-                                "level_of_difficulty" => $level_of_difficalty, 
+                                "level_of_difficulty" => $level_of_difficulty, 
                                 "level_of_fear" => $level_of_fear,
                                 "duration" => $duration, 
                                 "address" => $address,
@@ -175,7 +145,7 @@ if (isset($_POST['action'])) {
                                 "full_desc" => $full_desc,
                                 "specifics" => $specifics,
                                 "schedule" => $schedule,
-                                "path_to_images" => $path_to_image,
+                                "path_to_images" => $path_to_images,
                                 "number_of_images" => $numberOfImages,
                                 "type_of_game_id" => $type_of_game_id)
                 );
@@ -183,15 +153,7 @@ if (isset($_POST['action'])) {
 
                 /* Добавление полей в quest_has_genre */
                 
-                $query = 'INSERT INTO quest_has_genre (quest_id, genre_id)
-                                VALUE (:quest_id, :genre_id);';
-
-                foreach ($genresId as $genreId) {
-
-                    //echo $genreId;
-                    bd("INSERT", $query, array("quest_id" => $questId, "genre_id" => $genreId));
-
-                }
+                insertIntoQuestHasGenre($questId, $genresId);
 
                 $quest = getQuestById($questId);
                 $typeOfGame = getTypeOfGameById($quest['type_of_game_id']);
@@ -246,13 +208,7 @@ if (isset($_POST['action'])) {
     }
 }
 
-function getQuestById($questId) {
-    return bd("SELECT", "SELECT * FROM quest WHERE id=:quest_id", array("quest_id"=>$questId))[0];
-}
 
-function getTypeOfGameById($typeOfGameId) {
-    return bd("SELECT", "SELECT * FROM type_of_game where id=:type_of_game_id", array("type_of_game_id" => $typeOfGameId))[0]['name'];
-}
 
 function translit($st) {
     $st = mb_strtolower($st, "utf-8");

@@ -1,5 +1,7 @@
 <?php
 
+include_once("bd.php");
+
 $path=explode("/", $_SERVER["REQUEST_URI"]);
 
 switch ($path[1]) {
@@ -142,45 +144,6 @@ function home() {
     main();
 
     bottom();
-}
-
-function bd($queryType, $sql, $prm){
-    
-    $pdo = getDBConnection();
-
-    switch ($queryType){
-        case 'SELECT': {
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute($prm);
-            $data=$stmt->fetchAll();
-            //var_dump($data);
-            return $data;
-        }
-        case 'INSERT': {
-            $pdo->prepare($sql)->execute($prm);
-            return $pdo->lastInsertId();
-        }
-        case 'DELETE': {
-            $pdo->prepare($sql)->execute($prm);
-        }
-    }
-
-}
-
-function getDBConnection() {
-    $host = 'localhost';
-    $db   = 'quest_lovers';
-    $user = 'root';
-    $pass = 'dinamo03';
-    $charset = 'utf8';
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-    $opt = [
-        PDO::ATTR_ERRMODE =>PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES   => false,
-    ];
-
-    return new PDO($dsn, $user, $pass, $opt);
 }
 
 function error() {

@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding="ISO-8859-1"?>
+<quests>
+    <quest>
+        <title>Some title1</title>
+        <min_number_of_players>2</min_number_of_players>
+        <max_number_of_players>3</max_number_of_players>
+        <age_limit>18</age_limit>
+        <level_of_difficulty>1</level_of_difficulty>
+        <level_of_fear>2</level_of_fear>
+        <duration>60</duration>
+        <address>Some address</address>
+        <genres_id>2,3,7</genres_id>
+        <annotation>Some annotation</annotation>
+        <full_desc>Some description</full_desc>
+        <specifics>Some specifics</specifics>
+        <schedule>{}</schedule>
+        <path_to_images>img/quests/puzzle_tainaya_lichnost_photo_</path_to_images>
+        <number_of_images>1</number_of_images>
+        <type_of_game_id>1</type_of_game_id>
+    </quest>
+    <quest>
+        <title>Some title2</title>
+        <min_number_of_players>2</min_number_of_players>
+        <max_number_of_players>3</max_number_of_players>
+        <age_limit>18</age_limit>
+        <level_of_difficulty>1</level_of_difficulty>
+        <level_of_fear>2</level_of_fear>
+        <duration>60</duration>
+        <address>Some address</address>
+        <genres_id>2,3,7</genres_id>
+        <annotation>Some annotation</annotation>
+        <full_desc>Some description</full_desc>
+        <specifics>Some specifics</specifics>
+        <schedule>{}</schedule>
+        <path_to_images>img/quests/puzzle_tainaya_lichnost_photo_</path_to_images>
+        <number_of_images>1</number_of_images>
+        <type_of_game_id>1</type_of_game_id>
+    </quest>
+</quests>

@@ -436,6 +436,7 @@
             contentType: false,
             success: function (receivedData) {
                 
+                //console.log(receivedData);
                 var receivedDataJSON = JSON.parse(receivedData);
                 
                 if (receivedDataJSON.status === 'SUCCESS') {
